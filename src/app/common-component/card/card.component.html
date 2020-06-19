@@ -1,0 +1,16 @@
+<div class="card">
+  <div class="card-header font-weight-bold text-muted">
+    {{ name }}
+    <div class="card-header-actions" *ngIf="canCollapse">
+      <i class="fa"
+         [class.fa-angle-up]="!isCollapsed"
+         [class.fa-angle-down]="isCollapsed"
+         (click)="isCollapsed = !isCollapsed"
+         style="cursor: pointer;"
+      ></i>
+    </div>
+  </div>
+  <div class="card-body" [collapse]="isCollapsed">
+    <ng-content></ng-content>
+  </div>
+</div>
