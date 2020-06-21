@@ -1,0 +1,34 @@
+<table class="table table-sm table-hover">
+  <thead>
+    <tr>
+      <th
+        *ngFor="let column of columns"
+        [class.text-center]="column.center"
+        [style.width]="column.width"
+      >
+        {{ column.name | titlecase }}
+      </th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr
+      *ngFor="let row of dataRows"
+      [style.cursor]="enableRowRouting ? 'pointer' : 'auto'"
+      [routerLink]="enableRowRouting ? row['routerLink'] : null"
+    >
+      <td
+        *ngFor="let column of columns"
+        [class.text-center]="column.center"
+        [ngSwitch]="column.presentType">
+        <span class="text-muted" *ngSwitchCase="1">{{ row[column.name] }}</span>
+        <span class="text-muted" *ngSwitchCase="2">{{ row[column.name] | relativeDate }}</span>
+        <span class="text-muted" *ngSwitchCase="3">{{ row[column.name] | date:'yyyy.MM.dd HH:mm:ss' }}</span>
+        <span class="text-muted" *ngSwitchCase="4"><i [ngClass]="row[column.name]['icon']" [style.color]="row[column.name]['color']"></i></span>
+        <span class="text-muted" *ngSwitchDefault>{{ row[column.name] }}</span>
+      </td>
+    </tr>
+    <tr *ngIf="dataRows.length === 0">
+      <td class="text-muted text-center" [colSpan]="columns.length">No available entry now.</td>
+    </tr>
+  </tbody>
+</table>
