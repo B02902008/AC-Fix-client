@@ -1,6 +1,6 @@
 import { Component, Input } from '@angular/core';
 
-import { AutofixLoadingData } from '../dashboard-interface-and-config';
+import { AutofixLoadingData } from '../dashboard-interface-and-const';
 
 @Component({
   selector: 'app-autofix-loading',

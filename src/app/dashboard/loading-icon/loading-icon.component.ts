@@ -1,7 +1,7 @@
 import { Component, Input } from '@angular/core';
 
-import { dangerTheme, warningTheme, successTheme } from '../../app-interface-and-config';
-import { AutofixLoadingData } from '../dashboard-interface-and-config';
+import { dangerTheme, warningTheme, successTheme } from '../../app-interface-and-const';
+import { AutofixLoadingData } from '../dashboard-interface-and-const';
 
 @Component({
   selector: 'app-loading-icon',

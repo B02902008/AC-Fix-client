@@ -2,8 +2,8 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
-import { AutofixFixingRecord } from '../app-interface-and-config';
-import { AutofixLoading } from './dashboard-interface-and-config';
+import { AutofixFixingRecord } from '../app-interface-and-const';
+import { AutofixLoading } from './dashboard-interface-and-const';
 
 @Injectable()
 export class DashboardService {

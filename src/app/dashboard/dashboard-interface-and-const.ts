@@ -1,4 +1,4 @@
-import { autofixServices } from '../app-interface-and-config';
+import { autofixServices } from '../app-interface-and-const';
 import { ColumnConfig, ColumnType, TableCellIcon } from '../common-component/table/table-interface';
 
 export interface AutofixLoading {

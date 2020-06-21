@@ -3,14 +3,14 @@ import { interval } from 'rxjs';
 
 import { DashboardService } from '../dashboard.service';
 
-import { successTheme, dangerTheme, darkTheme } from '../../app-interface-and-config';
+import { successTheme, dangerTheme, darkTheme } from '../../app-interface-and-const';
 import {
   DashboardCurrentQueueRowData,
   DashboardRecentResultRowData,
   autofixLoadingDataSet,
   currentQueueTableColumns,
   recentResultTableColumns
-} from '../dashboard-interface-and-config';
+} from '../dashboard-interface-and-const';
 
 @Component({
   selector: 'app-dashboard',
