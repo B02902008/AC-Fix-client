@@ -1,0 +1,23 @@
+<div class="animated fadeIn">
+
+  <app-card [name]="'Auto-Fix Service Loading'" [canCollapse]="false">
+    <app-autofix-loading [dataSet]="autofixLoadingDataSet"></app-autofix-loading>
+  </app-card>
+
+  <div class="row">
+
+    <div class="col-md-12 col-lg-6">
+      <app-card [name]="'Current Fixing Queue'" [canCollapse]="false">
+        <app-table [columns]="currentQueueTableColumns" [enableRowRouting]="true" [dataRows]="currentQueueTableRows"></app-table>
+      </app-card>
+    </div>
+
+    <div class="col-md-12 col-lg-6">
+      <app-card [name]="'Recent finished Result'" [canCollapse]="false">
+        <app-table [columns]="recentResultTableColumns" [enableRowRouting]="true" [dataRows]="recentResultTableRows"></app-table>
+      </app-card>
+    </div>
+
+  </div>
+
+</div>

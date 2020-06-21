@@ -1,0 +1,16 @@
+<svg style="width: 100%; height: 100px;">
+  <defs>
+    <linearGradient #svgGradient [id]="'loading-icon-svg-gradient-' + UUID" x1="0" y1="0" x2="0" y2="1">
+      <stop [attr.offset]="(1 - data.cur / data.max) | percent" stop-color="#CCCCCC"/>
+      <stop [attr.offset]="(1 - data.cur / data.max) | percent" [attr.stop-color]="iconFillingColor()"/>
+    </linearGradient>
+  </defs>
+  <use [attr.href]="'assets/img/brand.svg#' + data.icon"
+       [style.fill]="'url(#' + svgGradient.id + ')'"
+       [routerLink]="'/autofix/' + data.name"
+       style="cursor: pointer;"
+  />
+</svg>
+<div class="text-muted" style="text-align: center;">
+  {{ data.name | titlecase }} : {{ data.cur }} / {{ data.max }}
+</div>
