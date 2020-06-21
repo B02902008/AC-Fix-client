@@ -20,9 +20,9 @@ export class DashboardComponent implements OnInit {
 
   autofixLoadingDataSet = autofixLoadingDataSet;
   currentQueueTableColumns = currentQueueTableColumns;
-  currentQueueTableRows: DashboardCurrentQueueRowData[];
+  currentQueueTableRows: DashboardCurrentQueueRowData[] = [];
   recentResultTableColumns = recentResultTableColumns;
-  recentResultTableRows: DashboardRecentResultRowData[];
+  recentResultTableRows: DashboardRecentResultRowData[] = [];
 
   constructor(private service: DashboardService) {
     interval(30000).subscribe(_ => { this.getNewData(); });
