@@ -1,3 +1,19 @@
+<div class="row" *ngIf="enablePagination || enableJumpToPage">
+  <div class="text-muted px-3 py-2 mr-auto" *ngIf="enablePagination">
+    {{ (pagination.currentPage - 1) * pagination.perPage + 1 | ordinal }}
+     ~
+    {{ pagination.currentPage === pagination.totalPage ? pagination.totalEntry : pagination.currentPage * pagination.perPage | ordinal }}
+     entry of total {{ pagination.totalEntry }} {{ pagination.totalEntry > 1 ? 'entries are' : 'entry is' }} displayed
+  </div>
+  <div class="text-muted px-3 py-1" *ngIf="enablePagination && enableJumpToPage">
+    <div class="input-group input-group-sm" style="width: 180px;">
+      <input type="text" class="form-control" placeholder="Jump to page" [(ngModel)]="jumpToPageInput">
+      <div class="input-group-append">
+        <button type="button" class="btn btn-sm btn-secondary" (click)="jumpToPage()">Go</button>
+      </div>
+    </div>
+  </div>
+</div>
 <table class="table table-sm table-hover">
   <thead>
     <tr>
@@ -32,3 +48,16 @@
     </tr>
   </tbody>
 </table>
+<div class="row justify-content-center" *ngIf="enablePagination">
+  <pagination
+    [boundaryLinks]="true"
+    [directionLinks]="true"
+    [totalItems]="pagination.totalEntry"
+    [itemsPerPage]="pagination.perPage"
+    [maxSize]="5"
+    [ngModel]="pagination.currentPage"
+    (pageChanged)="tablePageChanged($event)"
+    class="pagination-sm"
+    previousText="&lsaquo;" nextText="&rsaquo;" firstText="&laquo;" lastText="&raquo;"
+  ></pagination>
+</div>
