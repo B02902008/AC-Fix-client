@@ -3,8 +3,8 @@
     {{ name }}
     <div class="card-header-actions" *ngIf="canCollapse">
       <i class="fa"
-         [class.fa-angle-up]="!isCollapsed"
-         [class.fa-angle-down]="isCollapsed"
+         [class.fa-chevron-up]="!isCollapsed"
+         [class.fa-chevron-down]="isCollapsed"
          (click)="isCollapsed = !isCollapsed"
          style="cursor: pointer;"
       ></i>
