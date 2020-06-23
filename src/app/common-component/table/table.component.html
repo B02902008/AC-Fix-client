@@ -21,8 +21,13 @@
         *ngFor="let column of columns"
         [class.text-center]="column.center"
         [style.width]="column.width"
+        [style.cursor]="column.sortable ? 'pointer' : 'auto'"
+        (click)="sortableColumnClick(column)"
       >
         {{ column.name | titlecase }}
+        <ng-container *ngIf="enableSorting && column.sortable">
+          &nbsp;<i [ngClass]="getSortingIconClass(column.bind === currentSorting.sorting ? currentSorting.direction : '')"></i>
+        </ng-container>
       </th>
     </tr>
   </thead>
@@ -36,11 +41,11 @@
         *ngFor="let column of columns"
         [class.text-center]="column.center"
         [ngSwitch]="column.presentType">
-        <span class="text-muted" *ngSwitchCase="1">{{ row[column.name] }}</span>
-        <span class="text-muted" *ngSwitchCase="2">{{ row[column.name] | relativeDate }}</span>
-        <span class="text-muted" *ngSwitchCase="3">{{ row[column.name] | date:'yyyy.MM.dd HH:mm:ss' }}</span>
-        <span class="text-muted" *ngSwitchCase="4"><i [ngClass]="row[column.name]['icon']" [style.color]="row[column.name]['color']"></i></span>
-        <span class="text-muted" *ngSwitchDefault>{{ row[column.name] }}</span>
+        <span class="text-muted" *ngSwitchCase="1">{{ row[column.bind] }}</span>
+        <span class="text-muted" *ngSwitchCase="2">{{ row[column.bind] | relativeDate }}</span>
+        <span class="text-muted" *ngSwitchCase="3">{{ row[column.bind] | date:'yyyy.MM.dd HH:mm:ss' }}</span>
+        <span class="text-muted" *ngSwitchCase="4"><i [ngClass]="row[column.bind]['icon']" [style.color]="row[column.bind]['color']"></i></span>
+        <span class="text-muted" *ngSwitchDefault>{{ row[column.bind] }}</span>
       </td>
     </tr>
     <tr *ngIf="dataRows.length === 0">

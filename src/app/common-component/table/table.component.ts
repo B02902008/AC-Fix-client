@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { ColumnType, ColumnConfig, Pagination } from './table-interface';
+import { ColumnType, ColumnConfig, Pagination, Sorting } from './table-interface';
 import {PageChangedEvent} from 'ngx-bootstrap/pagination';
 
 @Component({
@@ -12,9 +12,12 @@ export class TableComponent implements OnInit {
   @Input() enableRowRouting = false;
   @Input() enablePagination = false;
   @Input() enableJumpToPage = false;
+  @Input() enableSorting = false;
+  @Input() currentSorting: Sorting = { sorting: '', direction: '' };
   @Input() pagination: Pagination;
   @Input() dataRows: any[] = [];
   @Output() loadPageRequest = new EventEmitter<number>();
+  @Output() sortPageRequest = new EventEmitter<string>();
   jumpToPageInput: string;
 
   constructor() {
@@ -25,6 +28,7 @@ export class TableComponent implements OnInit {
       if (!column.presentType) { column.presentType = ColumnType.plainText; }
       if (!column.sortable) { column.sortable = false; }
       if (!column.center) { column.center = false; }
+      if (!column.bind) { column.bind = column.name; }
     });
   }
 
@@ -38,6 +42,22 @@ export class TableComponent implements OnInit {
 
   tablePageChanged(event: PageChangedEvent): void {
     this.loadPageRequest.emit(event.page);
+  }
+
+  sortableColumnClick(event: ColumnConfig): void {
+    if (!event.sortable) { return; }
+    this.sortPageRequest.emit(event.bind);
+  }
+
+  getSortingIconClass(direction: string) {
+    switch (direction.toLowerCase()) {
+      case 'desc':
+        return { fa: true, 'fa-sort-desc': true };
+      case 'asc':
+        return { fa: true, 'fa-sort-asc': true };
+      default:
+        return { fa: true, 'fa-sort': true };
+    }
   }
 
 }

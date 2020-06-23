@@ -11,6 +11,7 @@ export interface ColumnConfig {
   sortable?: boolean;
   center?: boolean;
   width?: string;
+  bind?: string;
 }
 
 export interface Pagination {
@@ -18,6 +19,11 @@ export interface Pagination {
   totalPage: number;
   currentPage: number;
   perPage: number;
+}
+
+export interface Sorting {
+  sorting: string;
+  direction: string;
 }
 
 export interface TableCellIcon {
