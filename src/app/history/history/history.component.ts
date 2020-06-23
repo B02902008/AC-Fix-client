@@ -1,0 +1,93 @@
+import { Component, OnInit } from '@angular/core';
+import { Router, ActivatedRoute, ParamMap } from '@angular/router';
+import { switchMap } from 'rxjs/operators';
+
+import { HistoryService } from '../history.service';
+
+import { dangerTheme, darkTheme, infoTheme, successTheme } from '../../app-interface-and-const';
+import { AutofixHistoryRowData, autofixHistoryTableColumns, PagedFixingRecordList } from '../history-interface-and-const';
+import { Pagination, Sorting } from '../../common-component/table/table-interface';
+
+@Component({
+  selector: 'app-history',
+  templateUrl: './history.component.html'
+})
+export class HistoryComponent implements OnInit {
+
+  columns = autofixHistoryTableColumns;
+  pagination: Pagination = { totalEntry: 1, totalPage: 1, currentPage: 1, perPage: 1 };
+  currentSorting: Sorting = { sorting: '', direction: '' };
+  rows: AutofixHistoryRowData[] = [];
+
+  constructor(
+    private route: ActivatedRoute,
+    private router: Router,
+    private service: HistoryService
+  ) { }
+
+  ngOnInit(): void {
+    this.currentSorting = {
+      sorting: this.route.snapshot.paramMap.has('sorting') ? this.route.snapshot.paramMap.get('sorting') : 'id',
+      direction: this.route.snapshot.paramMap.has('direction') ? this.route.snapshot.paramMap.get('direction') : 'desc'
+    };
+    this.route.paramMap.pipe(
+      switchMap((params: ParamMap) =>
+        this.service.getAllHistoryPage(parseInt(params.get('pageId'), 10), params.get('sorting'), params.get('direction'))
+    )).subscribe(paged => this.parsePagedList(paged));
+  }
+
+  tablePageChanged(event: number): void {
+    this.router.navigate(['/history/page/' + event, this.currentSorting]);
+  }
+
+  tableSortChanged(event: string): void {
+    this.currentSorting = {
+      sorting: event,
+      direction: this.currentSorting.sorting === event && this.currentSorting.direction === 'desc' ? 'asc' : 'desc'
+    };
+    this.router.navigate(['/history/page/1', this.currentSorting]);
+  }
+
+  parsePagedList(paged: PagedFixingRecordList): void {
+    this.rows = [];
+    paged.content.forEach(row => {
+      this.rows.push({
+        id: row.id,
+        stat: this.getHistoryTableCellIcon(row.stat),
+        name: row.name,
+        lang: row.lang,
+        tool: row.tool,
+        start: new Date(row.start),
+        end: row.end ? new Date(row.end) : null,
+        routerLink: ['/history', row.id]
+      });
+    });
+    this.pagination = {
+      totalEntry: paged.totalElements,
+      totalPage: paged.totalPages,
+      currentPage: paged.number + 1,
+      perPage: paged.size
+    };
+  }
+
+  getHistoryTableCellIcon(stat: number) {
+    const iconClass = {
+      fa: true,
+      'fa-circle-o': stat === 1,
+      'fa-remove': stat === -1,
+      'fa-hourglass-half': stat === 0,
+      'fa-question': stat > 1 || stat < -1
+    };
+    switch (stat) {
+      case 1:
+        return { icon: iconClass, color: successTheme.code };
+      case -1:
+        return { icon: iconClass, color: dangerTheme.code };
+      case 0:
+        return { icon: iconClass, color: infoTheme.code };
+      default:
+        return { icon: iconClass, color: darkTheme.code };
+    }
+  }
+
+}

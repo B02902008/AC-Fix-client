@@ -1,0 +1,22 @@
+<div class="animated fadeIn">
+
+  <div class="row justify-content-center">
+    <div class="col-12">
+      <app-card [name]="'Auto-Fix Service History'" [scrollableX]="true">
+        <app-table [columns]="columns"
+                   [enableRowRouting]="true"
+                   [enablePagination]="true"
+                   [enableJumpToPage]="true"
+                   [enableSorting]="true"
+                   [currentSorting]="currentSorting"
+                   [pagination]="pagination"
+                   [dataRows]="rows"
+                   (loadPageRequest)="tablePageChanged($event)"
+                   (sortPageRequest)="tableSortChanged($event)"></app-table>
+      </app-card>
+    </div>
+  </div>
+
+
+
+</div>
