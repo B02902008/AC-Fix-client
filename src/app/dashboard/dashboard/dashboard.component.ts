@@ -54,10 +54,10 @@ export class DashboardComponent implements OnInit {
         this.currentQueueTableRows = [];
         rows.forEach(row => {
           this.currentQueueTableRows.push({
-            index: row.id,
+            id: row.id,
             name: row.name,
             start: new Date(row.start),
-            routerLink: '/history/' + row.id
+            routerLink: ['/history', + row.id]
           });
         });
       });
@@ -69,11 +69,11 @@ export class DashboardComponent implements OnInit {
         this.recentResultTableRows = [];
         rows.forEach(row => {
           this.recentResultTableRows.push({
-            index: row.id,
+            id: row.id,
             stat: this.getDashboardTableCellIcon(row.stat),
             name: row.name,
             end: new Date(row.end),
-            routerLink: '/history/' + row.id
+            routerLink: ['/history', + row.id]
           });
         });
       });

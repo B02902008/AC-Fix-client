@@ -14,18 +14,18 @@ export interface AutofixLoadingData {
 }
 
 export interface DashboardCurrentQueueRowData {
-  index: number;
+  id: number;
   name: string;
   start: Date;
-  routerLink: string;
+  routerLink: any[];
 }
 
 export interface DashboardRecentResultRowData {
-  index: number;
+  id: number;
   stat: TableCellIcon;
   name: string;
   end: Date;
-  routerLink: string;
+  routerLink: any[];
 }
 
 export const autofixLoadingDataSet: AutofixLoadingData[] = autofixServices.map(service => {
@@ -33,13 +33,13 @@ export const autofixLoadingDataSet: AutofixLoadingData[] = autofixServices.map(s
 });
 
 export const currentQueueTableColumns: ColumnConfig[] = [
-  { name: 'index', center: true, width: '50px' },
+  { name: 'index', center: true, width: '50px', bind: 'id' },
   { name: 'name' },
   { name: 'start', presentType: ColumnType.relativeDate, width: '120px' }
 ];
 
 export const recentResultTableColumns: ColumnConfig[] = [
-  { name: 'index', center: true, width: '50px' },
+  { name: 'index', center: true, width: '50px', bind: 'id' },
   { name: 'stat', presentType: ColumnType.icon, center: true, width: '50px' },
   { name: 'name' },
   { name: 'end', presentType: ColumnType.relativeDate, width: '120px' }
