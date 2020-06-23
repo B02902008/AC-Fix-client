@@ -1,0 +1,30 @@
+<div class="card text-monospace text-white bg-dark">
+  <div class="card-body">
+    <ng-container *ngFor="let matcher of messageList.map((matchColoringPattern)); let isLast = last">
+      <ng-container *ngIf="!matcher.match">{{ matcher.input }}</ng-container>
+      <ng-container *ngIf="matcher.match">
+        <ng-container *ngFor="let token of messageMatchingStrategy; let idx = index">
+          <ng-container [ngSwitch]="token.type">
+            <ng-container *ngSwitchCase="1">
+              {{ replaceLeadingEndingSpace(matcher.match[idx + 1]) }}
+            </ng-container>
+            <ng-container *ngSwitchCase="2">
+              <span [style.color]="logTimestampColoring">
+                {{ replaceLeadingEndingSpace(matcher.match[idx + 1]) }}
+              </span>
+            </ng-container>
+            <ng-container *ngSwitchCase="3">
+              <span [style.color]="getLevelColoring(matcher.match[idx + 1].toLowerCase())">
+                {{ replaceLeadingEndingSpace(matcher.match[idx + 1]) }}
+              </span>
+            </ng-container>
+            <ng-container *ngSwitchDefault>
+              {{ replaceLeadingEndingSpace(matcher.match[idx + 1]) }}
+            </ng-container>
+          </ng-container>
+        </ng-container>
+      </ng-container>
+      <br *ngIf="!isLast">
+    </ng-container>
+  </div>
+</div>
