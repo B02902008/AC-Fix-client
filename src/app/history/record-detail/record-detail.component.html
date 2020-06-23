@@ -1,0 +1,58 @@
+<div class="row justify-content-center">
+  <div class="col-12">
+    <table class="table table-sm table-borderless">
+      <tr>
+        <td class="record-detail-table-field">Build Index</td>
+        <td>:</td>
+        <td class="record-detail-table-value">{{ record.id }}</td>
+        <td class="record-detail-table-field">Language</td>
+        <td>:</td>
+        <td class="record-detail-table-value">{{ record.lang | titlecase }}</td>
+      </tr>
+      <tr>
+        <td class="record-detail-table-field">Project Name</td>
+        <td>:</td>
+        <td class="record-detail-table-value">{{ record.name }}</td>
+        <td class="record-detail-table-field">Build Tool</td>
+        <td>:</td>
+        <td class="record-detail-table-value">{{ record.tool | titlecase }}</td>
+      </tr>
+      <tr>
+        <td class="record-detail-table-field">Start Time</td>
+        <td>:</td>
+        <td class="record-detail-table-value">{{ record.start | date:'yyyy.MM.dd HH:mm:ss' }}</td>
+        <td class="record-detail-table-field">Time Used</td>
+        <td>:</td>
+        <td class="record-detail-table-value">{{ getTimePeriod() }}</td>
+      </tr>
+      <tr>
+        <td class="record-detail-table-field">End Time</td>
+        <td>:</td>
+        <td class="record-detail-table-value">{{ record.end ? (record.end | date:'yyyy.MM.dd HH:mm:ss') : '' }}</td>
+        <td class="record-detail-table-field">Build Status</td>
+        <td>:</td>
+        <td class="record-detail-table-value">
+          <i [ngClass]="setRecordDetailStatIconClass(record.stat)" [style.color]="setRecordDetailStatIconColor(record.stat)"></i>
+        </td>
+      </tr>
+      <tr>
+        <td class="record-detail-table-field"></td>
+        <td></td>
+        <td class="record-detail-table-value"></td>
+        <td class="record-detail-table-field">Download</td>
+        <td>:</td>
+        <td class="record-detail-table-value">
+          <div class="product-download-link" *ngIf="record.stat === 1 || record.stat === -1">
+            <i class="cil-cloud-download"></i> Download Link
+          </div>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+<app-terminal
+  [messageMatchingStrategy]="coloringPattern"
+  [logLevelColoringStrategy]="levelColoringStrategy"
+  [messageList]="log"
+></app-terminal>
+

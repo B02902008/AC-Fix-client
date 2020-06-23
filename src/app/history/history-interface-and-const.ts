@@ -1,7 +1,7 @@
 import { ColumnConfig, ColumnType, TableCellIcon } from '../common-component/table/table-interface';
 import { MatchingToken, TokenType } from '../common-component/terminal-style-log-display/terminal-interface';
 
-import { AutofixFixingRecord, successTheme, warningTheme, infoTheme, dangerTheme } from '../app-interface-and-const';
+import { AutofixFixingRecord, successTheme, warningTheme, infoTheme, dangerTheme, primaryTheme } from '../app-interface-and-const';
 
 export interface PagedFixingRecordList {
   content: AutofixFixingRecord[];
@@ -41,9 +41,9 @@ export const terminalColoringPattern: MatchingToken[] = [
 ];
 
 export const terminalLogLevelColoringStrategy = {
-  start: successTheme.code,
+  start: primaryTheme.code,
   stage: successTheme.code,
-  final: successTheme.code,
+  final: primaryTheme.code,
   debug: warningTheme.code,
   error: dangerTheme.code,
   info: infoTheme.code

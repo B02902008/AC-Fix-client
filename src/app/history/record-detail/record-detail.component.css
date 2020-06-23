@@ -1,0 +1,17 @@
+td {
+  vertical-align: middle;
+}
+td.record-detail-table-field {
+  text-align: right;
+  font-weight: bold;
+}
+
+td.record-detail-table-value {
+  text-align: center;
+  width: 35%;
+}
+
+.product-download-link:hover {
+  cursor: pointer;
+  color: cornflowerblue;
+}
