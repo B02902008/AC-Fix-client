@@ -42,9 +42,9 @@
         <td class="record-detail-table-field">Download</td>
         <td>:</td>
         <td class="record-detail-table-value">
-          <div class="product-download-link" *ngIf="record.stat === 1 || record.stat === -1">
+          <span class="product-download-link" *ngIf="record.stat === 1 || record.stat === -1" (click) = "downloadLinkClick()">
             <i class="cil-cloud-download"></i> Download Link
-          </div>
+          </span>
         </td>
       </tr>
     </table>

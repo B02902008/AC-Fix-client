@@ -1,5 +1,6 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
+import { saveAs } from 'file-saver';
 
 import { HistoryService } from '../history.service';
 
@@ -34,7 +35,7 @@ export class RecordDetailComponent implements OnInit, OnDestroy {
     this.subscription = this.service.webSocketConnectedSubject.subscribe(socketId => {
       this.service.streamWebSocket.subscribe('/ws-private/topic/autofix/log', message => this.log.push(message.body));
       this.service.streamWebSocket.subscribe('/ws-private/topic/terminate', message => {
-        this.getRecordDetail();
+        if (this.record.stat !== 1 && this.record.stat !== -1) { this.getRecordDetail(); }
         this.service.webSocketDisconnect();
       });
       this.service.invokeLogStream(this.id).subscribe();
@@ -60,6 +61,10 @@ export class RecordDetailComponent implements OnInit, OnDestroy {
     const minute = Math.floor(Math.abs(seconds) / 60 - hour * 60);
     const second = Math.abs(seconds) - minute * 60 - hour * 3600;
     return (seconds >= 0 ? '' : '- ') + hour + (minute > 9 ? ':' : ':0') + minute + (second > 9 ? ':' : ':0') + second;
+  }
+
+  downloadLinkClick(): void {
+    this.service.downloadFixingProduct(this.id).subscribe(blob => saveAs(blob, this.record.name + '.tar.gz'));
   }
 
   setRecordDetailStatIconClass(stat: number) {

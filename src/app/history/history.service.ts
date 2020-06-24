@@ -32,6 +32,11 @@ export class HistoryService {
     return this.http.get<AutofixFixingRecord>('http://140.112.90.150:5566/history/' + id);
   }
 
+  downloadFixingProduct(id: number): Observable<Blob> {
+    if (isNaN(id)) { return; }
+    return this.http.get('http://140.112.90.150:5566/history/product/' + id, { responseType: 'blob' });
+  }
+
   invokeLogStream(id: number): Observable<any> {
     if (isNaN(id)) { return; }
     const headers = new HttpHeaders({ 'Content-Type':  'application/json' });
