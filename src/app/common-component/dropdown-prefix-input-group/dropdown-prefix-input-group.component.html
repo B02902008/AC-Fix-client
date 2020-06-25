@@ -1,0 +1,28 @@
+<div class="input-group">
+
+  <ng-container *ngIf="prefixChoices.length > 0">
+
+    <div class="input-group-prepend" dropdown>
+      <button type="button" class="btn btn-secondary dropdown-toggle" dropdownToggle>
+        <i [ngClass]="currentChoice.icon"></i><span class="caret"></span>
+      </button>
+      <div class="dropdown-menu" *dropdownMenu>
+        <ng-container *ngFor="let choice of prefixChoices">
+          <span class="dropdown-item" (click)="dropdownChose(choice)"><i [ngClass]="choice.icon"></i>{{ choice.name }}</span>
+        </ng-container>
+      </div>
+    </div>
+
+    <div class="input-group-prepend text-monospace">
+      <span class="input-group-text">{{ currentChoice.prefix }}</span>
+    </div>
+
+  </ng-container>
+
+  <input type="text" class="form-control" [attr.placeholder]="placeholder" [(ngModel)]="inputValue" (input)="checkInput()">
+
+  <div class="input-group-append">
+    <button type="button" class="btn btn-dark" (click)="sendBtnClick()">{{ buttonText }}</button>
+  </div>
+
+</div>
