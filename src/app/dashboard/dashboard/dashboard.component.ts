@@ -1,9 +1,9 @@
-import { Component, OnInit } from '@angular/core';
-import { interval } from 'rxjs';
+import { Component, OnInit, OnDestroy } from '@angular/core';
+import { interval, Subscription } from 'rxjs';
 
 import { DashboardService } from '../dashboard.service';
 
-import { successTheme, dangerTheme, darkTheme } from '../../app-interface-and-const';
+import { statIconColorLambda, statIconClassLambda } from '../../app-interface-and-const';
 import {
   DashboardCurrentQueueRowData,
   DashboardRecentResultRowData,
@@ -13,23 +13,28 @@ import {
 } from '../dashboard-interface-and-const';
 
 @Component({
-  selector: 'app-dashboard',
+  // Avoid magic selector 'app-dashboard'
+  selector: 'app-dashboard-non-coreui',
   templateUrl: './dashboard.component.html'
 })
-export class DashboardComponent implements OnInit {
+export class DashboardComponent implements OnInit, OnDestroy {
 
   autofixLoadingDataSet = autofixLoadingDataSet;
   currentQueueTableColumns = currentQueueTableColumns;
   currentQueueTableRows: DashboardCurrentQueueRowData[] = [];
   recentResultTableColumns = recentResultTableColumns;
   recentResultTableRows: DashboardRecentResultRowData[] = [];
+  refreshSubscription: Subscription;
 
-  constructor(private service: DashboardService) {
-    interval(30000).subscribe(_ => { this.getNewData(); });
-  }
+  constructor(private service: DashboardService) { }
 
   ngOnInit(): void {
     this.getNewData();
+    this.refreshSubscription = interval(30000).subscribe(_ => { this.getNewData(); });
+  }
+
+  ngOnDestroy(): void {
+    this.refreshSubscription.unsubscribe();
   }
 
   getNewData(): void {
@@ -70,30 +75,13 @@ export class DashboardComponent implements OnInit {
         rows.forEach(row => {
           this.recentResultTableRows.push({
             id: row.id,
-            stat: this.getDashboardTableCellIcon(row.stat),
+            stat: { icon: statIconClassLambda(row.stat), color: statIconColorLambda(row.stat) },
             name: row.name,
             end: new Date(row.end),
             routerLink: ['/history', + row.id]
           });
         });
       });
-  }
-
-  getDashboardTableCellIcon(stat: number) {
-    const iconClass = {
-      fa: true,
-      'fa-circle-o': stat === 1,
-      'fa-remove': stat === -1,
-      'fa-question': stat > 1 || stat < -1 || stat === 0
-    };
-    switch (stat) {
-      case 1:
-        return { icon: iconClass, color: successTheme.code };
-      case -1:
-        return { icon: iconClass, color: dangerTheme.code };
-      default:
-        return { icon: iconClass, color: darkTheme.code };
-    }
   }
 
 }
