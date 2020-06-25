@@ -27,9 +27,12 @@ export class RecordDetailComponent implements OnInit, OnDestroy {
     private service: HistoryService
   ) { }
 
-  ngOnInit(): void {
-    this.id = parseInt(this.route.snapshot.paramMap.get('id'), 10);
+  onParamReset(id: number): void {
+    if (isNaN(id)) { return; /* TODO: route to 404 */ }
+    this.id = id;
+    this.log = [];
     this.getRecordDetail();
+    if (this.service.webSocketId) { this.service.webSocketDisconnect(); }
     const subscription = this.service.connected.subscribe(_ => {
       this.service.webSocket.subscribe('/ws-private/topic/autofix/log', message => this.log.push(message.body));
       this.service.webSocket.subscribe('/ws-private/topic/terminate', _ => {
@@ -39,8 +42,11 @@ export class RecordDetailComponent implements OnInit, OnDestroy {
       this.service.invokeLogStream(this.id).subscribe();
       subscription.unsubscribe();
     });
-    this.service.webSocketDisconnect();
     this.service.webSocketConnect();
+  }
+
+  ngOnInit(): void {
+    this.route.paramMap.subscribe(params => this.onParamReset(parseInt(params.get('id'), 10)));
   }
 
   ngOnDestroy(): void {
