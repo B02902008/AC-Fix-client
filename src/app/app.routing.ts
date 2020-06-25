@@ -20,6 +20,10 @@ export const routes: Routes = [
       {
         path: 'history',
         loadChildren: () => import('./history/history.module').then(m => m.HistoryModule)
+      },
+      {
+        path: 'autofix',
+        loadChildren: () => import('./autofix/autofix.module').then(m => m.AutofixModule)
       }
     ]
   },

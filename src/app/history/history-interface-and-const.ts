@@ -1,7 +1,5 @@
+import { AutofixFixingRecord } from '../app-interface-and-const';
 import { ColumnConfig, ColumnType, TableCellIcon } from '../common-component/table/table-interface';
-import { MatchingToken, TokenType } from '../common-component/terminal-style-log-display/terminal-interface';
-
-import { AutofixFixingRecord, successTheme, warningTheme, infoTheme, dangerTheme, primaryTheme } from '../app-interface-and-const';
 
 export interface PagedFixingRecordList {
   content: AutofixFixingRecord[];
@@ -31,20 +29,3 @@ export const autofixHistoryTableColumns: ColumnConfig[] = [
   { name: 'start time', presentType: ColumnType.absoluteDate, sortable: true, width: '180px', bind: 'start' },
   { name: 'end time', presentType: ColumnType.absoluteDate, sortable: true, width: '180px', bind: 'end' }
 ];
-
-export const terminalColoringPattern: MatchingToken[] = [
-  { regex: /(\[)/, type: TokenType.plaintext },
-  { regex: /(\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2})/, type: TokenType.timestamp },
-  { regex: /(]\[)/, type: TokenType.plaintext },
-  { regex: /(\w{4,5})/, type: TokenType.logLevels },
-  { regex: /( ?] .+)$/, type: TokenType.plaintext }
-];
-
-export const terminalLogLevelColoringStrategy = {
-  start: primaryTheme.code,
-  stage: successTheme.code,
-  final: primaryTheme.code,
-  debug: warningTheme.code,
-  error: dangerTheme.code,
-  info: infoTheme.code
-};

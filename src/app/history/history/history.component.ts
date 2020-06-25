@@ -4,7 +4,7 @@ import { switchMap } from 'rxjs/operators';
 
 import { HistoryService } from '../history.service';
 
-import { dangerTheme, darkTheme, infoTheme, successTheme } from '../../app-interface-and-const';
+import { statIconColorLambda, statIconClassLambda } from '../../app-interface-and-const';
 import { AutofixHistoryRowData, autofixHistoryTableColumns, PagedFixingRecordList } from '../history-interface-and-const';
 import { Pagination, Sorting } from '../../common-component/table/table-interface';
 
@@ -53,7 +53,7 @@ export class HistoryComponent implements OnInit {
     paged.content.forEach(row => {
       this.rows.push({
         id: row.id,
-        stat: this.getHistoryTableCellIcon(row.stat),
+        stat: { icon: statIconClassLambda(row.stat), color: statIconColorLambda(row.stat) },
         name: row.name,
         lang: row.lang,
         tool: row.tool,
@@ -68,26 +68,6 @@ export class HistoryComponent implements OnInit {
       currentPage: paged.number + 1,
       perPage: paged.size
     };
-  }
-
-  getHistoryTableCellIcon(stat: number) {
-    const iconClass = {
-      fa: true,
-      'fa-circle-o': stat === 1,
-      'fa-remove': stat === -1,
-      'fa-hourglass-half': stat === 0,
-      'fa-question': stat > 1 || stat < -1
-    };
-    switch (stat) {
-      case 1:
-        return { icon: iconClass, color: successTheme.code };
-      case -1:
-        return { icon: iconClass, color: dangerTheme.code };
-      case 0:
-        return { icon: iconClass, color: infoTheme.code };
-      default:
-        return { icon: iconClass, color: darkTheme.code };
-    }
   }
 
 }

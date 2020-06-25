@@ -9,9 +9,9 @@ import { PagedFixingRecordList } from './history-interface-and-const';
 @Injectable()
 export class HistoryService {
 
-  streamWebSocket: CompatClient = null;
+  webSocket: CompatClient = null;
   webSocketId = '';
-  webSocketConnectedSubject: Subject<string> = new Subject<any>();
+  connected: Subject<string> = new Subject<string>();
 
   constructor(private http: HttpClient) { }
 
@@ -32,11 +32,6 @@ export class HistoryService {
     return this.http.get<AutofixFixingRecord>('http://140.112.90.150:5566/history/' + id);
   }
 
-  downloadFixingProduct(id: number): Observable<Blob> {
-    if (isNaN(id)) { return; }
-    return this.http.get('http://140.112.90.150:5566/history/product/' + id, { responseType: 'blob' });
-  }
-
   invokeLogStream(id: number): Observable<any> {
     if (isNaN(id)) { return; }
     const headers = new HttpHeaders({ 'Content-Type':  'application/json' });
@@ -44,23 +39,20 @@ export class HistoryService {
   }
 
   webSocketConnect() {
-    this.streamWebSocket = Stomp.over(() => new WebSocket('ws://140.112.90.150:5566/ws-connect'));
-    this.streamWebSocket.connect({}, frame => {
-      this.streamWebSocket.subscribe('/ws-private/topic/socket-ID', message => {
-        this.webSocketId = JSON.parse(message.body).content;
-        this.webSocketConnectedSubject.next(this.webSocketId);
+    this.webSocket = Stomp.over(() => new WebSocket('ws://140.112.90.150:5566/ws-connect'));
+    this.webSocket.connect({}, _ => {
+      this.webSocket.subscribe('/ws-private/topic/socket-ID', msg => {
+        this.webSocketId = msg.body;
+        this.connected.next(this.webSocketId);
       });
-      this.streamWebSocket.send('/websocket/whoami', {}, '');
-    }, error => {
-      this.webSocketDisconnect();
-    });
+      this.webSocket.send('/websocket/whoami', {}, '');
+    }, _ => this.webSocketDisconnect());
   }
 
   webSocketDisconnect() {
-    if (this.streamWebSocket !== null) { this.streamWebSocket.ws.close(); }
-    this.streamWebSocket = null;
+    if (this.webSocket !== null) { this.webSocket.ws.close(); }
+    this.webSocket = null;
     this.webSocketId = '';
-    console.log('Web socket disconnected.');
   }
 
 }
