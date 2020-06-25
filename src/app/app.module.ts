@@ -5,42 +5,24 @@ import { LocationStrategy, HashLocationStrategy } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
 
-import { AppAsideModule, AppFooterModule, AppHeaderModule, AppSidebarModule } from '@coreui/angular';
-import { PerfectScrollbarModule } from 'ngx-perfect-scrollbar';
-import { TabsModule } from 'ngx-bootstrap/tabs';
-
 import { AppRoutingModule } from './app.routing';
 
 import { AppComponent } from './app.component';
-import { CoreuiLayoutComponent } from './layout';
-
-const APP_CONTAINERS = [
-  CoreuiLayoutComponent
-];
 
 @NgModule({
   declarations: [
-    AppComponent,
-    ...APP_CONTAINERS
+    AppComponent
   ],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
     HttpClientModule,
     FormsModule,
-    AppRoutingModule,
-    // CoreUI layout modules
-    AppAsideModule,
-    AppFooterModule,
-    AppHeaderModule,
-    AppSidebarModule,
-    PerfectScrollbarModule,
-    TabsModule.forRoot()
+    AppRoutingModule
   ],
-  providers: [{
-    provide: LocationStrategy,
-    useClass: HashLocationStrategy
-  }],
+  providers: [
+    { provide: LocationStrategy, useClass: HashLocationStrategy }
+  ],
   bootstrap: [ AppComponent ]
 })
 export class AppModule { }

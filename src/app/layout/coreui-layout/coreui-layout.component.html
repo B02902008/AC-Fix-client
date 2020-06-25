@@ -1,0 +1,42 @@
+<app-header
+  [navbarBrandRouterLink]="['/dashboard']"
+  [fixed]="true"
+  [navbarBrandFull]="{ src: 'assets/img/logo.svg', width: 89, height: 25, alt: 'SELab Logo' }"
+  [navbarBrandMinimized]="{ src: 'assets/img/logo-mini.svg', width: 30, height: 30, alt: 'SELab Minimized Logo' }"
+  [sidebarToggler]="'lg'"
+  [asideMenuToggler]="'lg'">
+  <ul class="nav navbar-nav d-md-down-none mr-auto">
+    <li class="nav-item px-3" *ngFor="let item of headerNavItems">
+      <a class="nav-link" [routerLink]="item.url">{{ item.name }}</a>
+    </li>
+  </ul>
+</app-header>
+
+<div class="app-body">
+
+  <app-sidebar #appSidebar [fixed]="true" [display]="'lg'" [minimized]="sidebarMinimized" (minimizedChange)="sideMinimize($event)">
+    <app-sidebar-nav [navItems]="sidebarNavItems" [perfectScrollbar] [disabled]="appSidebar.minimized"></app-sidebar-nav>
+    <app-sidebar-minimizer></app-sidebar-minimizer>
+  </app-sidebar>
+
+  <div class="main">
+    <br>
+    <div class="container">
+      <router-outlet></router-outlet>
+    </div>
+  </div>
+
+  <app-aside [fixed]="true" [display]="false">
+    <tabset>
+      <app-aside-autofix-tab
+        *ngFor="let tab of asideTabSet;" [tab]="tab" (selectTab)="asideTabSelected(tab)" (deselect)="asideTabDeselect(tab)"
+      ></app-aside-autofix-tab>
+    </tabset>
+  </app-aside>
+
+</div>
+
+<app-footer>
+  <span><a href="https://selab.csie.ntu.edu.tw">SELab</a> &copy; CSIE NTU</span>
+  <span class="ml-auto">Powered by <a href="https://coreui.io/angular">CoreUI</a></span>
+</app-footer>

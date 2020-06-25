@@ -6,8 +6,6 @@ import { AutofixComponent } from './autofix/autofix.component';
 import { AutofixRoutingModule } from './autofix-routing.module';
 import { CommonComponentModule } from '../common-component/common-component.module';
 
-import { AutofixService } from './autofix.service';
-
 
 @NgModule({
   declarations: [
@@ -18,8 +16,6 @@ import { AutofixService } from './autofix.service';
     AutofixRoutingModule,
     CommonComponentModule
   ],
-  providers: [
-    AutofixService
-  ]
+  providers: []
 })
 export class AutofixModule { }

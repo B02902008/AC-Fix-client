@@ -1,11 +1,13 @@
 import { Injectable } from '@angular/core';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
+import { Observable } from 'rxjs';
+import { Stomp } from '@stomp/stompjs';
 
 import { AutofixWebSocket, webSockets } from './autofix-interace-and-const';
-import { Stomp } from '@stomp/stompjs';
-import {Observable} from 'rxjs';
 
-@Injectable()
+@Injectable({
+  providedIn: 'root'
+})
 export class AutofixService {
 
   webSockets = webSockets;
@@ -29,6 +31,7 @@ export class AutofixService {
     socket.webSocket.connect({}, _ => {
       socket.webSocket.subscribe('/ws-private/topic/terminate', _ => this.webSocketDisconnect(tool));
       socket.webSocket.subscribe('/ws-private/topic/autofix/log', msg => socket.logStream.push(msg.body));
+      socket.webSocket.subscribe('/ws-private/topic/autofix/stage', msg => socket.stageEmit.next(msg.body));
       socket.webSocket.subscribe('/ws-private/topic/socket-ID', msg => {
         socket.webSocketId = msg.body;
         socket.connected.next(socket.webSocketId);

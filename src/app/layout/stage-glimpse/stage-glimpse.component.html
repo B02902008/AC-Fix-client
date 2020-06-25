@@ -1,0 +1,15 @@
+<div class="list-group list-group-accent">
+  <div
+    class="list-group-item list-group-item-accent-secondary bg-light text-center font-weight-bold text-muted text-uppercase small"
+    *ngIf="glimpse.index"
+    [style.cursor]="'pointer'"
+    [routerLink]="'/history/' + glimpse.index"
+  >
+    Build #{{ glimpse.index }}
+  </div>
+  <div *ngFor="let stage of glimpse.stage" [ngClass]="itemAccentClass(stage.stat)">
+    <div>
+      <i [ngClass]="iconClass(stage.stat)" [style.color]="iconColor(stage.stat)"></i>  {{ stage.name }}
+    </div>
+  </div>
+</div>
