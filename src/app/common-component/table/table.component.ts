@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { ColumnType, ColumnConfig, Pagination, Sorting } from './table-interface';
-import {PageChangedEvent} from 'ngx-bootstrap/pagination';
+import { PageChangedEvent } from 'ngx-bootstrap/pagination';
 
 @Component({
   selector: 'app-table',

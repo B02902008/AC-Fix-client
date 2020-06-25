@@ -7,7 +7,7 @@
   </defs>
   <use [attr.href]="'assets/img/brand.svg#' + data.icon"
        [style.fill]="'url(#' + svgGradient.id + ')'"
-       [routerLink]="'/autofix/' + data.name"
+       [routerLink]="['/autofix', data.name]"
        style="cursor: pointer;"
   />
 </svg>
