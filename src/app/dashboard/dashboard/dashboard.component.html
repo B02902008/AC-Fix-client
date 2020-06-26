@@ -1,7 +1,11 @@
 <div class="animated fadeIn">
 
   <app-card [name]="'Auto-Fix Service Loading'">
-    <app-autofix-loading [dataSet]="autofixLoadingDataSet"></app-autofix-loading>
+    <div class="row">
+      <div class="col-sm-4" *ngFor="let data of autofixLoadingDataSet; let idx = index">
+        <app-loading-icon [UUID]="idx" [data]="data"></app-loading-icon>
+      </div>
+    </div>
   </app-card>
 
   <div class="row">

@@ -1,7 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
-import { AutofixLoadingComponent } from './autofix-loading/autofix-loading.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { LoadingIconComponent } from './loading-icon/loading-icon.component';
 
@@ -14,7 +13,6 @@ import { DashboardService } from './dashboard.service';
 @NgModule({
   declarations: [
     DashboardComponent,
-    AutofixLoadingComponent,
     LoadingIconComponent
   ],
   imports: [
