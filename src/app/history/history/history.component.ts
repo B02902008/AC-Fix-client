@@ -32,7 +32,7 @@ export class HistoryComponent implements OnInit {
     };
     this.route.paramMap.pipe(
       switchMap((params: ParamMap) =>
-        this.service.getAllHistoryPage(parseInt(params.get('pageId'), 10), params.get('sorting'), params.get('direction'))
+        this.service.getAllHistoryPage(Number(params.get('pageId')), params.get('sorting'), params.get('direction'))
     )).subscribe(paged => this.parsePagedList(paged));
   }
 

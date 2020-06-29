@@ -28,14 +28,18 @@ export class RecordDetailComponent implements OnInit, OnDestroy {
   ) { }
 
   onParamReset(id: number): void {
-    if (isNaN(id)) { return; /* TODO: route to 404 */ }
+    if (isNaN(id)) {
+      this.router.navigate(['/error'], {
+        queryParams: { code: 400, error: 'Bad Request', message: 'Invalid record id, should be a number.' }
+      });
+    }
     this.id = id;
     this.log = [];
     this.getRecordDetail();
     if (this.service.webSocketId) { this.service.webSocketDisconnect(); }
     const subscription = this.service.connected.subscribe(_ => {
       this.service.webSocket.subscribe('/ws-private/topic/autofix/log', message => this.log.push(message.body));
-      this.service.webSocket.subscribe('/ws-private/topic/terminate', _ => {
+      this.service.webSocket.subscribe('/ws-private/topic/terminate', () => {
         if (this.record.stat !== 1 && this.record.stat !== -1) { this.getRecordDetail(); }
         this.service.webSocketDisconnect();
       });
@@ -46,7 +50,7 @@ export class RecordDetailComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    this.route.paramMap.subscribe(params => this.onParamReset(parseInt(params.get('id'), 10)));
+    this.route.paramMap.subscribe(params => this.onParamReset(Number(params.get('id'))));
   }
 
   ngOnDestroy(): void {

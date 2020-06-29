@@ -8,10 +8,12 @@ import { FormsModule } from '@angular/forms';
 import { AppRoutingModule } from './app.routing';
 
 import { AppComponent } from './app.component';
+import { ErrorPageComponent } from './error-page/error-page.component';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    ErrorPageComponent
   ],
   imports: [
     BrowserModule,

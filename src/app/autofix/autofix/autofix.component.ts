@@ -29,7 +29,11 @@ export class AutofixComponent implements OnInit {
   ) { }
 
   onParamReset(tool: string): void {
-    if (tool === null || !services.contains(tool) || !this.service.webSockets.contains(tool) ) { return; /* TODO: route to 404 */ }
+    if (tool === null || !services.contains(tool) || !this.service.webSockets.contains(tool) ) {
+      this.router.navigate(['/error'], {
+        queryParams: { code: 404, error: 'Not Found', message: 'Auto-Fix service for ' + tool + ' is not provided.' }
+      });
+    }
     this.tool = tool;
     this.config = services[tool];
   }

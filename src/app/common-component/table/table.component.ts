@@ -33,7 +33,7 @@ export class TableComponent implements OnInit {
   }
 
   jumpToPage(): void {
-    const page: number = parseInt(this.jumpToPageInput, 10);
+    const page: number = Number(this.jumpToPageInput);
     if (!isNaN(page) && page > 0 ) {
       this.jumpToPageInput = '';
       this.pagination.currentPage = Math.min(this.pagination.totalPage, page);

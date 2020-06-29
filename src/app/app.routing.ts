@@ -3,12 +3,17 @@ import { RouterModule, Routes } from '@angular/router';
 
 import { LayoutModule } from './layout/layout.module';
 import { CoreuiLayoutComponent } from './layout/coreui-layout/coreui-layout.component';
+import { ErrorPageComponent } from './error-page/error-page.component';
 
 export const routes: Routes = [
   {
     path: '',
     redirectTo: 'dashboard',
     pathMatch: 'full'
+  },
+  {
+    path: 'error',
+    component: ErrorPageComponent
   },
   {
     path: '',
