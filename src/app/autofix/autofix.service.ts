@@ -1,7 +1,10 @@
 import { Injectable } from '@angular/core';
-import {HttpClient, HttpHeaders} from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { catchError } from 'rxjs/operators';
 import { Stomp } from '@stomp/stompjs';
+
+import { AppService } from '../app.service';
 
 import { AutofixWebSocket, webSockets } from './autofix-interace-and-const';
 
@@ -12,7 +15,7 @@ export class AutofixService {
 
   webSockets = webSockets;
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, private service: AppService) { }
 
   getWebSocket(tool: string): AutofixWebSocket {
     return this.webSockets.contains(tool) ? this.webSockets[tool] : { webSocket: null, webSocketId: '', logStream: [] };
@@ -21,7 +24,11 @@ export class AutofixService {
   invokeAutoFix(tool: string, socketID: string, url: string): Observable<number> {
     if (!this.webSockets.contains(tool)) { return; }
     const headers = new HttpHeaders({ 'Content-Type':  'application/json' });
-    return this.http.post<number>('http://140.112.90.150:5566/autofix/' + tool, { socketID, url }, { headers });
+    return this.http.post<number>('http://140.112.90.150:5566/autofix/' + tool, { socketID, url }, { headers })
+      .pipe(catchError(err => {
+        this.webSocketDisconnect(tool);
+        return this.service.handleError(err);
+      }));
   }
 
   webSocketConnect(tool: string): void {

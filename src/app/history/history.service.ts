@@ -1,7 +1,10 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams, HttpHeaders } from '@angular/common/http';
 import { Observable, Subject } from 'rxjs';
+import { catchError } from 'rxjs/operators';
 import { CompatClient, Stomp } from '@stomp/stompjs';
+
+import { AppService } from '../app.service';
 
 import { AutofixFixingRecord } from '../app-interface-and-const';
 import { PagedFixingRecordList } from './history-interface-and-const';
@@ -13,29 +16,33 @@ export class HistoryService {
   webSocketId = '';
   connected: Subject<string> = new Subject<string>();
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, private service: AppService) { }
 
   getAllHistoryDefault(): Observable<PagedFixingRecordList> {
-    return this.http.get<PagedFixingRecordList>('http://140.112.90.150:5566/history/');
+    return this.http.get<PagedFixingRecordList>('http://140.112.90.150:5566/history/')
+      .pipe(catchError(err => this.service.handleError(err)));
   }
 
   getAllHistoryPage(pageId: number, sorting: string, direction: string): Observable<PagedFixingRecordList> {
-    if (isNaN(pageId)) { return this.getAllHistoryDefault(); }
+    if (isNaN(pageId) || pageId <= 0) { return this.getAllHistoryDefault(); }
     let params = new HttpParams();
     if (sorting) { params = params.set('sorting', sorting); }
     if (direction) { params = params.set('direction', direction); }
-    return this.http.get<PagedFixingRecordList>('http://140.112.90.150:5566/history/page/' + pageId, { params });
+    return this.http.get<PagedFixingRecordList>('http://140.112.90.150:5566/history/page/' + pageId, { params })
+      .pipe(catchError(err => this.service.handleError(err)));
   }
 
   getHistoryById(id: number): Observable<AutofixFixingRecord> {
     if (isNaN(id)) { return null; }
-    return this.http.get<AutofixFixingRecord>('http://140.112.90.150:5566/history/' + id);
+    return this.http.get<AutofixFixingRecord>('http://140.112.90.150:5566/history/' + id)
+      .pipe(catchError(err => this.service.handleError(err)));
   }
 
   invokeLogStream(id: number): Observable<any> {
     if (isNaN(id)) { return; }
     const headers = new HttpHeaders({ 'Content-Type':  'application/json' });
-    return this.http.post('http://140.112.90.150:5566/history/stream/' + id, { socketID: this.webSocketId }, { headers });
+    return this.http.post('http://140.112.90.150:5566/history/stream/' + id, { socketID: this.webSocketId }, { headers })
+      .pipe(catchError(err => this.service.handleError(err)));
   }
 
   webSocketConnect() {
