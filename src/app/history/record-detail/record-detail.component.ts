@@ -18,6 +18,7 @@ export class RecordDetailComponent implements OnInit, OnDestroy {
   coloringPattern: MatchingToken[] = terminalColoringPattern;
   levelColoringStrategy = terminalLogLevelColoringStrategy;
   log: string[] = [];
+  productSize: number;
   iconColor = statIconColorLambda;
   iconClass = statIconClassLambda;
 
@@ -59,6 +60,7 @@ export class RecordDetailComponent implements OnInit, OnDestroy {
 
   getRecordDetail(): void {
     this.service.getHistoryById(this.id).subscribe(record => this.record = record);
+    this.service.headProduct(this.id).subscribe(len => this.productSize = len);
   }
 
   getTimePeriod(): string {

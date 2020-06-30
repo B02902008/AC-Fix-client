@@ -51,6 +51,7 @@ export interface AutofixWebSocket {
   logStream: string[];
   stageEmit: Subject<string>;
   buildIndex: number;
+  productSize: number;
 }
 
 export const webSockets = {
@@ -60,7 +61,8 @@ export const webSockets = {
     connected: new Subject<string>(),
     logStream: [],
     stageEmit: new Subject<string>(),
-    buildIndex: -1
+    buildIndex: -1,
+    productSize: 0
   } as AutofixWebSocket,
   gradle: {
     webSocket: null,
@@ -68,7 +70,8 @@ export const webSockets = {
     connected: new Subject<string>(),
     logStream: [],
     stageEmit: new Subject<string>(),
-    buildIndex: -1
+    buildIndex: -1,
+    productSize: 0
   } as AutofixWebSocket,
   pip: {
     webSocket: null,
@@ -76,7 +79,8 @@ export const webSockets = {
     connected: new Subject<string>(),
     logStream: [],
     stageEmit: new Subject<string>(),
-    buildIndex: -1
+    buildIndex: -1,
+    productSize: 0
   } as AutofixWebSocket,
   contains: (s) => (['cmake', 'gradle', 'pip'].includes(s))
 };

@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Observable } from 'rxjs';
-import { catchError } from 'rxjs/operators';
+import { Observable, of } from 'rxjs';
+import { catchError, map } from 'rxjs/operators';
 import { Stomp } from '@stomp/stompjs';
 
 import { AppService } from '../app.service';
@@ -21,6 +21,12 @@ export class AutofixService {
     return this.webSockets.contains(tool) ? this.webSockets[tool] : { webSocket: null, webSocketId: '', logStream: [] };
   }
 
+  headProduct(id: number): Observable<number> {
+    if (isNaN(id)) { return of(0); }
+    return this.http.head('http://140.112.90.150:5566/history/product/' + id, { observe: 'response' })
+      .pipe(map(res => Number(res.headers.get('Content-Length'))), catchError(_ => of(0)));
+  }
+
   invokeAutoFix(tool: string, socketID: string, url: string): Observable<number> {
     if (!this.webSockets.contains(tool)) { return; }
     const headers = new HttpHeaders({ 'Content-Type':  'application/json' });
@@ -36,7 +42,7 @@ export class AutofixService {
     const socket: AutofixWebSocket = this.webSockets[tool];
     socket.webSocket = Stomp.over(() => new WebSocket('ws://140.112.90.150:5566/ws-connect'));
     socket.webSocket.connect({}, _ => {
-      socket.webSocket.subscribe('/ws-private/topic/terminate', _ => this.webSocketDisconnect(tool));
+      socket.webSocket.subscribe('/ws-private/topic/terminate', () => this.webSocketDisconnect(tool));
       socket.webSocket.subscribe('/ws-private/topic/autofix/log', msg => socket.logStream.push(msg.body));
       socket.webSocket.subscribe('/ws-private/topic/autofix/stage', msg => socket.stageEmit.next(msg.body));
       socket.webSocket.subscribe('/ws-private/topic/socket-ID', msg => {
@@ -53,6 +59,7 @@ export class AutofixService {
     if (socket.webSocket !== null) { socket.webSocket.ws.close(); }
     socket.webSocket = null;
     socket.webSocketId = '';
+    this.headProduct(socket.buildIndex).subscribe(len => socket.productSize = len);
   }
 
 }

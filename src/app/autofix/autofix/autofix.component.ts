@@ -21,6 +21,7 @@ export class AutofixComponent implements OnInit {
   levelColoringStrategy = terminalLogLevelColoringStrategy;
   isFixing = () => (this.service.getWebSocket(this.tool).webSocket !== null);
   isFinished = () => (this.service.getWebSocket(this.tool).webSocket === null && this.service.getWebSocket(this.tool).logStream.length > 0);
+  isDownloadable = () => (this.service.getWebSocket(this.tool).productSize > 0);
 
   constructor(
     private route: ActivatedRoute,

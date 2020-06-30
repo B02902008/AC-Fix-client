@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams, HttpHeaders } from '@angular/common/http';
-import { Observable, Subject } from 'rxjs';
-import { catchError } from 'rxjs/operators';
+import { Observable, of, Subject } from 'rxjs';
+import { catchError, map } from 'rxjs/operators';
 import { CompatClient, Stomp } from '@stomp/stompjs';
 
 import { AppService } from '../app.service';
@@ -36,6 +36,12 @@ export class HistoryService {
     if (isNaN(id)) { return null; }
     return this.http.get<AutofixFixingRecord>('http://140.112.90.150:5566/history/' + id)
       .pipe(catchError(err => this.service.handleError(err)));
+  }
+
+  headProduct(id: number): Observable<number> {
+    if (isNaN(id)) { return of(0); }
+    return this.http.head('http://140.112.90.150:5566/history/product/' + id, { observe: 'response' })
+      .pipe(map(res => Number(res.headers.get('Content-Length'))), catchError(_ => of(0)));
   }
 
   invokeLogStream(id: number): Observable<any> {

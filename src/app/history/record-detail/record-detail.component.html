@@ -45,9 +45,10 @@
           <td>:</td>
           <td class="record-detail-table-value">
             <a #link [attr.href]="'http://140.112.90.150:5566/history/product/' + id" style="display: none"></a>
-            <span class="product-download-link" *ngIf="record.stat === 1 || record.stat === -1" (click) = "link.click()">
-              <i class="cil-cloud-download"></i> Download Link
+            <span class="product-download-link" *ngIf="(record.stat === 1 || record.stat === -1) && productSize > 0" (click)="link.click()">
+              <i class="cil-cloud-download"></i> Download Link ({{ productSize | bytes }})
             </span>
+            <span *ngIf="(record.stat === 1 || record.stat === -1) && productSize === 0">No available product</span>
           </td>
         </tr>
       </table>
