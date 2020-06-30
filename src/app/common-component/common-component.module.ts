@@ -10,9 +10,9 @@ import { CardComponent } from './card/card.component';
 import { DropdownPrefixInputGroupComponent } from './dropdown-prefix-input-group/dropdown-prefix-input-group.component';
 import { TableComponent } from './table/table.component';
 import { TerminalStyleLogDisplayComponent } from './terminal-style-log-display/terminal-style-log-display.component';
-import { BytesPipe } from './bytes.pipe';
-import { OrdinalPipe } from './ordinal.pipe';
-import { RelativeDatePipe } from './relative-date.pipe';
+import { BytesPipe } from './pipes/bytes.pipe';
+import { OrdinalPipe } from './pipes/ordinal.pipe';
+import { RelativeDatePipe } from './pipes/relative-date.pipe';
 
 
 @NgModule({
