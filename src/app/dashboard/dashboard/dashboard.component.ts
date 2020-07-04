@@ -62,7 +62,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
             id: row.id,
             name: row.name,
             start: new Date(row.start),
-            routerLink: ['/history', + row.id]
+            routerLink: ['/history', row.id]
           });
         });
       });
@@ -78,7 +78,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
             stat: { icon: statIconClassLambda(row.stat), color: statIconColorLambda(row.stat) },
             name: row.name,
             end: new Date(row.end),
-            routerLink: ['/history', + row.id]
+            routerLink: ['/history', row.id]
           });
         });
       });

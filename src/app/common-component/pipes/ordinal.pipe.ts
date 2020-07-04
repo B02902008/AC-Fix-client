@@ -7,9 +7,9 @@ export class OrdinalPipe implements PipeTransform {
 
   transform(value: number, ...args: unknown[]): unknown {
     if (value <= 0) { return ''; }
-    if (value === 1) { return '1st'; }
-    if (value === 2) { return '2nd'; }
-    if (value === 3) { return '3rd'; }
+    if (value % 10 === 1 && value % 100 !== 11) { return value + 'st'; }
+    if (value % 10 === 2 && value % 100 !== 12) { return value + 'nd'; }
+    if (value % 10 === 3 && value % 100 !== 13) { return value + 'rd'; }
     return value + 'th';
   }
 

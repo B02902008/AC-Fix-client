@@ -30,3 +30,11 @@ export interface TableCellIcon {
   icon: any;
   color: string;
 }
+
+const sortIconClass = {
+  asc:     { fa: true, 'fa-sort-asc': true,  'fa-sort-desc': false, 'fa-sort': false },
+  desc:    { fa: true, 'fa-sort-asc': false, 'fa-sort-desc': true,  'fa-sort': false },
+  default: { fa: true, 'fa-sort-asc': false, 'fa-sort-desc': false, 'fa-sort': true  },
+  contains: (k) => (k === 'asc' || k === 'desc')
+};
+export const sortIconClassLambda = (s: string) => (sortIconClass.contains(s) ? sortIconClass[s] : sortIconClass.default);

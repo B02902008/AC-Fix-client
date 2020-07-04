@@ -1,6 +1,6 @@
 <div class="card text-monospace text-white bg-dark">
   <div class="card-body">
-    <ng-container *ngFor="let matcher of messageList.map((matchColoringPattern)); let isLast = last">
+    <ng-container *ngFor="let matcher of messageList.map(matchColoringPattern); let isLast = last">
       <ng-container *ngIf="!matcher.match">{{ matcher.input }}</ng-container>
       <ng-container *ngIf="matcher.match">
         <ng-container *ngFor="let token of messageMatchingStrategy; let idx = index">

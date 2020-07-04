@@ -1,6 +1,7 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { ColumnType, ColumnConfig, Pagination, Sorting } from './table-interface';
 import { PageChangedEvent } from 'ngx-bootstrap/pagination';
+
+import { ColumnType, ColumnConfig, Pagination, Sorting, sortIconClassLambda } from './table-interface';
 
 @Component({
   selector: 'app-table',
@@ -19,6 +20,7 @@ export class TableComponent implements OnInit {
   @Output() loadPageRequest = new EventEmitter<number>();
   @Output() sortPageRequest = new EventEmitter<string>();
   jumpToPageInput: string;
+  iconClass = sortIconClassLambda;
 
   constructor() {
   }
@@ -47,17 +49,6 @@ export class TableComponent implements OnInit {
   sortableColumnClick(event: ColumnConfig): void {
     if (!event.sortable) { return; }
     this.sortPageRequest.emit(event.bind);
-  }
-
-  getSortingIconClass(direction: string) {
-    switch (direction.toLowerCase()) {
-      case 'desc':
-        return { fa: true, 'fa-sort-desc': true };
-      case 'asc':
-        return { fa: true, 'fa-sort-asc': true };
-      default:
-        return { fa: true, 'fa-sort': true };
-    }
   }
 
 }
