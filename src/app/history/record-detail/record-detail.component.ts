@@ -3,7 +3,14 @@ import { Router, ActivatedRoute } from '@angular/router';
 
 import { HistoryService } from '../history.service';
 
-import { AutofixFixingRecord, statIconColorLambda, statIconClassLambda, terminalColoringPattern, terminalLogLevelColoringStrategy } from '../../app-interface-and-const';
+import {
+  AutofixFixingRecord,
+  statIconColorLambda,
+  statIconClassLambda,
+  terminalColoringPattern,
+  terminalLogLevelColoringStrategy,
+  APIHost
+} from '../../app-interface-and-const';
 import { MatchingToken } from '../../common-component/terminal-style-log-display/terminal-interface';
 
 @Component({
@@ -14,11 +21,12 @@ import { MatchingToken } from '../../common-component/terminal-style-log-display
 export class RecordDetailComponent implements OnInit, OnDestroy {
 
   id: number;
+  productUrl: string;
+  productSize: number;
   record: AutofixFixingRecord = {} as AutofixFixingRecord;
   coloringPattern: MatchingToken[] = terminalColoringPattern;
   levelColoringStrategy = terminalLogLevelColoringStrategy;
   log: string[] = [];
-  productSize: number;
   iconColor = statIconColorLambda;
   iconClass = statIconClassLambda;
 
@@ -35,11 +43,12 @@ export class RecordDetailComponent implements OnInit, OnDestroy {
       });
     }
     this.id = id;
+    this.productUrl = APIHost + '/history/product/' + this.id;
     this.log = [];
     this.getRecordDetail();
     if (this.service.webSocketId) { this.service.webSocketDisconnect(); }
     const subscription = this.service.connected.subscribe(_ => {
-      this.service.webSocket.subscribe('/ws-private/topic/autofix/log', message => this.log.push(message.body));
+      this.service.webSocket.subscribe('/ws-private/topic/acfix/log', message => this.log.push(message.body));
       this.service.webSocket.subscribe('/ws-private/topic/terminate', () => {
         if (this.record.stat !== 1 && this.record.stat !== -1) { this.getRecordDetail(); }
         this.service.webSocketDisconnect();
@@ -70,6 +79,10 @@ export class RecordDetailComponent implements OnInit, OnDestroy {
     const minute = Math.floor(Math.abs(seconds) / 60 - hour * 60);
     const second = Math.abs(seconds) - minute * 60 - hour * 3600;
     return (seconds >= 0 ? '' : '- ') + hour + (minute > 9 ? ':' : ':0') + minute + (second > 9 ? ':' : ':0') + second;
+  }
+
+  navigateToSonar(): void {
+    this.router.navigate(['/sonar', this.id]);
   }
 
 }

@@ -30,6 +30,10 @@ export const routes: Routes = [
       {
         path: 'autofix',
         loadChildren: () => import('./autofix/autofix.module').then(m => m.AutofixModule)
+      },
+      {
+        path: 'sonar',
+        loadChildren: () => import('./sonar/sonar.module').then(m => m.SonarModule)
       }
     ]
   },

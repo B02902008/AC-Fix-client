@@ -14,17 +14,17 @@ export class DashboardService {
   constructor(private http: HttpClient, private service: AppService) { }
 
   getAutofixLoading(service: string): Observable<AutofixLoading> {
-    return this.http.get<AutofixLoading>('http://140.112.90.150:5566/autofix/loading/' + service)
+    return this.http.get<AutofixLoading>('/acfix/loading/' + service)
       .pipe(catchError(err => this.service.handleError(err)));
   }
 
   getCurrentQueue(): Observable<AutofixFixingRecord[]> {
-    return this.http.get<AutofixFixingRecord[]>('http://140.112.90.150:5566/dashboard/current')
+    return this.http.get<AutofixFixingRecord[]>('/dashboard/current')
       .pipe(catchError(err => this.service.handleError(err)));
   }
 
   getRecentResult(): Observable<AutofixFixingRecord[]> {
-    return this.http.get<AutofixFixingRecord[]>('http://140.112.90.150:5566/dashboard/recent')
+    return this.http.get<AutofixFixingRecord[]>('/dashboard/recent')
       .pipe(catchError(err => this.service.handleError(err)));
   }
 

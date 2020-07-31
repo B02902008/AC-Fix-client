@@ -6,7 +6,7 @@ import { CompatClient, Stomp } from '@stomp/stompjs';
 
 import { AppService } from '../app.service';
 
-import { AutofixFixingRecord } from '../app-interface-and-const';
+import { AutofixFixingRecord, WSHost } from '../app-interface-and-const';
 import { PagedFixingRecordList } from './history-interface-and-const';
 
 @Injectable()
@@ -19,7 +19,7 @@ export class HistoryService {
   constructor(private http: HttpClient, private service: AppService) { }
 
   getAllHistoryDefault(): Observable<PagedFixingRecordList> {
-    return this.http.get<PagedFixingRecordList>('http://140.112.90.150:5566/history/')
+    return this.http.get<PagedFixingRecordList>('/history/')
       .pipe(catchError(err => this.service.handleError(err)));
   }
 
@@ -28,31 +28,31 @@ export class HistoryService {
     let params = new HttpParams();
     if (sorting) { params = params.set('sorting', sorting); }
     if (direction) { params = params.set('direction', direction); }
-    return this.http.get<PagedFixingRecordList>('http://140.112.90.150:5566/history/page/' + pageId, { params })
+    return this.http.get<PagedFixingRecordList>('/history/page/' + pageId, { params })
       .pipe(catchError(err => this.service.handleError(err)));
   }
 
   getHistoryById(id: number): Observable<AutofixFixingRecord> {
     if (isNaN(id)) { return null; }
-    return this.http.get<AutofixFixingRecord>('http://140.112.90.150:5566/history/' + id)
+    return this.http.get<AutofixFixingRecord>('/history/' + id)
       .pipe(catchError(err => this.service.handleError(err)));
   }
 
   headProduct(id: number): Observable<number> {
     if (isNaN(id)) { return of(0); }
-    return this.http.head('http://140.112.90.150:5566/history/product/' + id, { observe: 'response' })
+    return this.http.head('/history/product/' + id, { observe: 'response' })
       .pipe(map(res => Number(res.headers.get('Content-Length'))), catchError(_ => of(0)));
   }
 
   invokeLogStream(id: number): Observable<any> {
     if (isNaN(id)) { return; }
     const headers = new HttpHeaders({ 'Content-Type':  'application/json' });
-    return this.http.post('http://140.112.90.150:5566/history/stream/' + id, { socketID: this.webSocketId }, { headers })
+    return this.http.post('/history/stream/' + id, { socketID: this.webSocketId }, { headers })
       .pipe(catchError(err => this.service.handleError(err)));
   }
 
   webSocketConnect() {
-    this.webSocket = Stomp.over(() => new WebSocket('ws://140.112.90.150:5566/ws-connect'));
+    this.webSocket = Stomp.over(() => new WebSocket(WSHost + '/ws-connect'));
     this.webSocket.connect({}, _ => {
       this.webSocket.subscribe('/ws-private/topic/socket-ID', msg => {
         this.webSocketId = msg.body;

@@ -6,6 +6,7 @@ import { Stomp } from '@stomp/stompjs';
 
 import { AppService } from '../app.service';
 
+import { WSHost } from '../app-interface-and-const';
 import { AutofixWebSocket, webSockets } from './autofix-interace-and-const';
 
 @Injectable({
@@ -23,14 +24,14 @@ export class AutofixService {
 
   headProduct(id: number): Observable<number> {
     if (isNaN(id)) { return of(0); }
-    return this.http.head('http://140.112.90.150:5566/history/product/' + id, { observe: 'response' })
+    return this.http.head('/history/product/' + id, { observe: 'response' })
       .pipe(map(res => Number(res.headers.get('Content-Length'))), catchError(_ => of(0)));
   }
 
   invokeAutoFix(tool: string, socketID: string, url: string): Observable<number> {
     if (!this.webSockets.contains(tool)) { return; }
     const headers = new HttpHeaders({ 'Content-Type':  'application/json' });
-    return this.http.post<number>('http://140.112.90.150:5566/autofix/' + tool, { socketID, url }, { headers })
+    return this.http.post<number>('/acfix/' + tool, { socketID, url }, { headers })
       .pipe(catchError(err => {
         this.webSocketDisconnect(tool);
         return this.service.handleError(err);
@@ -40,11 +41,11 @@ export class AutofixService {
   webSocketConnect(tool: string): void {
     if (!this.webSockets.contains(tool)) { return; }
     const socket: AutofixWebSocket = this.webSockets[tool];
-    socket.webSocket = Stomp.over(() => new WebSocket('ws://140.112.90.150:5566/ws-connect'));
+    socket.webSocket = Stomp.over(() => new WebSocket(WSHost + '/ws-connect'));
     socket.webSocket.connect({}, _ => {
       socket.webSocket.subscribe('/ws-private/topic/terminate', () => this.webSocketDisconnect(tool));
-      socket.webSocket.subscribe('/ws-private/topic/autofix/log', msg => socket.logStream.push(msg.body));
-      socket.webSocket.subscribe('/ws-private/topic/autofix/stage', msg => socket.stageEmit.next(msg.body));
+      socket.webSocket.subscribe('/ws-private/topic/acfix/log', msg => socket.logStream.push(msg.body));
+      socket.webSocket.subscribe('/ws-private/topic/acfix/stage', msg => socket.stageEmit.next(msg.body));
       socket.webSocket.subscribe('/ws-private/topic/socket-ID', msg => {
         socket.webSocketId = msg.body;
         socket.connected.next(socket.webSocketId);

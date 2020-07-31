@@ -59,3 +59,7 @@ export const terminalLogLevelColoringStrategy = {
   error: dangerTheme.code,
   info: infoTheme.code
 };
+
+export const APIHost = 'http://localhost:5566';
+export const WSHost = 'ws://localhost:5566';
+export const SQHost = 'http://localhost:9000';

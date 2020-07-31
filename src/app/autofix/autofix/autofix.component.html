@@ -22,13 +22,13 @@
     <app-terminal
       [messageMatchingStrategy]="coloringPattern"
       [logLevelColoringStrategy]="levelColoringStrategy"
-      [messageList]="service.getWebSocket(tool).logStream"
+      [messageList]="webSocket.logStream"
     >
 
       <div class="py-3" *ngIf="isFinished()">
-        <a #link [attr.href]="'http://140.112.90.150:5566/history/product/' + service.getWebSocket(tool).buildIndex" style="display: none"></a>
+        <a #link [attr.href]="productUrl + webSocket.buildIndex" style="display: none"></a>
         <span class="autofix-finished-link" *ngIf="isDownloadable()" (click)="link.click()">
-          <i class="cil-cloud-download"></i> Download Link ({{ service.getWebSocket(tool).productSize | bytes }})
+          <i class="cil-cloud-download"></i> Download Link ({{ webSocket.productSize | bytes }})
         </span>
         <span *ngIf="!isDownloadable()">No available product</span>
         <span style="cursor: default">&nbsp;|&nbsp;</span>

@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 
-import { AutofixServiceConfig, services } from '../autofix-interace-and-const';
+import { AutofixServiceConfig, AutofixWebSocket, services } from '../autofix-interace-and-const';
 
-import { terminalColoringPattern, terminalLogLevelColoringStrategy } from '../../app-interface-and-const';
+import { terminalColoringPattern, terminalLogLevelColoringStrategy, APIHost } from '../../app-interface-and-const';
 import { MatchingToken } from '../../common-component/terminal-style-log-display/terminal-interface';
 
 import { AutofixService } from '../autofix.service';
@@ -16,12 +16,14 @@ import { AutofixService } from '../autofix.service';
 export class AutofixComponent implements OnInit {
 
   tool =  '';
+  productUrl = APIHost + '/history/product/';
+  webSocket: AutofixWebSocket;
   config: AutofixServiceConfig = {} as AutofixServiceConfig;
   coloringPattern: MatchingToken[] = terminalColoringPattern;
   levelColoringStrategy = terminalLogLevelColoringStrategy;
-  isFixing = () => (this.service.getWebSocket(this.tool).webSocket !== null);
-  isFinished = () => (this.service.getWebSocket(this.tool).webSocket === null && this.service.getWebSocket(this.tool).logStream.length > 0);
-  isDownloadable = () => (this.service.getWebSocket(this.tool).productSize > 0);
+  isFixing = () => (this.webSocket.webSocket !== null);
+  isFinished = () => (this.webSocket.webSocket === null && this.webSocket.logStream.length > 0);
+  isDownloadable = () => (this.webSocket.productSize > 0);
 
   constructor(
     private route: ActivatedRoute,
@@ -36,7 +38,8 @@ export class AutofixComponent implements OnInit {
       });
     }
     this.tool = tool;
-    this.config = services[tool];
+    this.webSocket = this.service.getWebSocket(this.tool);
+    this.config = services[this.tool];
   }
 
   ngOnInit(): void {
@@ -44,17 +47,16 @@ export class AutofixComponent implements OnInit {
   }
 
   inputBtnClicked(input: string) {
-    const socket = this.service.getWebSocket(this.tool);
-    const subscription = socket.connected.subscribe(socketId => {
-      this.service.invokeAutoFix(this.tool, socketId, input).subscribe(id => socket.buildIndex = id);
+    const subscription = this.webSocket.connected.subscribe(socketId => {
+      this.service.invokeAutoFix(this.tool, socketId, input).subscribe(id => this.webSocket.buildIndex = id);
       subscription.unsubscribe();
     });
     this.service.webSocketConnect(this.tool);
   }
 
   restartLinkClicked(): void {
-    this.service.getWebSocket(this.tool).logStream = [];
-    this.service.getWebSocket(this.tool).buildIndex = -1;
+    this.webSocket.logStream = [];
+    this.webSocket.buildIndex = -1;
   }
 
 }
