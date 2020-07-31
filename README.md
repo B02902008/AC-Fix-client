@@ -1,27 +1,34 @@
-# AutoFixClient
+# AC-Fix Client
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 9.1.0.
+###### Author: Chen, Hong-Wun
+###### Organization: SELab in Department of CSIE, NTU
 
-## Development server
+---
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+This project is a submodule of AC-Fix.
 
-## Code scaffolding
+This project set up a Angular client for AC-Fix.
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+## System Requirement
 
-## Build
+Minimum Requirement
+- NodeJs 13.0.0
+- NPM 6.12.0
+- Angular 9.1.8
+- Docker
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `--prod` flag for a production build.
+## Run client
 
-## Running unit tests
+Install ddependency: ```npm install```
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+Build command: ```ng serve```
 
-## Running end-to-end tests
+The client will serve on default port 4200
 
-Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
+## Build Docker Image
 
-## Further help
+Build command ```./gradlew buildDockerImage```
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
+This will build a Docker image with tag ```ac-fix/ac-fix-client:1.0```
+
+Run the image with command like: ```docker run -d -p 4200:80 [IMAGE ID]```

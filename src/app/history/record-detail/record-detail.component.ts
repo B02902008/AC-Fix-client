@@ -48,7 +48,7 @@ export class RecordDetailComponent implements OnInit, OnDestroy {
     this.getRecordDetail();
     if (this.service.webSocketId) { this.service.webSocketDisconnect(); }
     const subscription = this.service.connected.subscribe(_ => {
-      this.service.webSocket.subscribe('/ws-private/topic/ac-fix/log', message => this.log.push(message.body));
+      this.service.webSocket.subscribe('/ws-private/topic/acfix/log', message => this.log.push(message.body));
       this.service.webSocket.subscribe('/ws-private/topic/terminate', () => {
         if (this.record.stat !== 1 && this.record.stat !== -1) { this.getRecordDetail(); }
         this.service.webSocketDisconnect();
