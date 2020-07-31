@@ -7,7 +7,7 @@ import {
 } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
-import { APIHost } from './app-interface-and-const';
+import { environment } from '../environments/environment';
 
 @Injectable()
 export class APIHostInterceptor implements HttpInterceptor {
@@ -15,7 +15,7 @@ export class APIHostInterceptor implements HttpInterceptor {
   constructor() {}
 
   intercept(request: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<unknown>> {
-    const updated = request.clone({ url: APIHost + request.url });
+    const updated = request.clone({ url: environment.APIHost + request.url });
     return next.handle(updated);
   }
 }

@@ -3,8 +3,9 @@ import { Router, ActivatedRoute } from '@angular/router';
 
 import { AcFixServiceConfig, AcFixWebSocket, services } from '../ac-fix-interace-and-const';
 
-import { terminalColoringPattern, terminalLogLevelColoringStrategy, APIHost } from '../../app-interface-and-const';
+import { terminalColoringPattern, terminalLogLevelColoringStrategy } from '../../app-interface-and-const';
 import { MatchingToken } from '../../common-component/terminal-style-log-display/terminal-interface';
+import { environment } from '../../../environments/environment';
 
 import { AcFixService } from '../ac-fix.service';
 
@@ -16,7 +17,7 @@ import { AcFixService } from '../ac-fix.service';
 export class AcFixComponent implements OnInit {
 
   tool =  '';
-  productUrl = APIHost + '/history/product/';
+  productUrl = environment.APIHost + '/history/product/';
   webSocket: AcFixWebSocket;
   config: AcFixServiceConfig = {} as AcFixServiceConfig;
   coloringPattern: MatchingToken[] = terminalColoringPattern;

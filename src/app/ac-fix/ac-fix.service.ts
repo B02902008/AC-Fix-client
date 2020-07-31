@@ -6,8 +6,8 @@ import { Stomp } from '@stomp/stompjs';
 
 import { AppService } from '../app.service';
 
-import { WSHost } from '../app-interface-and-const';
 import { AcFixWebSocket, webSockets } from './ac-fix-interace-and-const';
+import { environment } from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
@@ -41,7 +41,7 @@ export class AcFixService {
   webSocketConnect(tool: string): void {
     if (!this.webSockets.contains(tool)) { return; }
     const socket: AcFixWebSocket = this.webSockets[tool];
-    socket.webSocket = Stomp.over(() => new WebSocket(WSHost + '/ws-connect'));
+    socket.webSocket = Stomp.over(() => new WebSocket(environment.WSHost + '/ws-connect'));
     socket.webSocket.connect({}, _ => {
       socket.webSocket.subscribe('/ws-private/topic/terminate', () => this.webSocketDisconnect(tool));
       socket.webSocket.subscribe('/ws-private/topic/acfix/log', msg => socket.logStream.push(msg.body));

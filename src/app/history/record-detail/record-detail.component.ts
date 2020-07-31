@@ -8,10 +8,10 @@ import {
   statIconColorLambda,
   statIconClassLambda,
   terminalColoringPattern,
-  terminalLogLevelColoringStrategy,
-  APIHost
+  terminalLogLevelColoringStrategy
 } from '../../app-interface-and-const';
 import { MatchingToken } from '../../common-component/terminal-style-log-display/terminal-interface';
+import { environment } from '../../../environments/environment';
 
 @Component({
   selector: 'app-record-detail',
@@ -43,7 +43,7 @@ export class RecordDetailComponent implements OnInit, OnDestroy {
       });
     }
     this.id = id;
-    this.productUrl = APIHost + '/history/product/' + this.id;
+    this.productUrl = environment.APIHost + '/history/product/' + this.id;
     this.log = [];
     this.getRecordDetail();
     if (this.service.webSocketId) { this.service.webSocketDisconnect(); }

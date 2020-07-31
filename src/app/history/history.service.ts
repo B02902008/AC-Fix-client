@@ -6,8 +6,9 @@ import { CompatClient, Stomp } from '@stomp/stompjs';
 
 import { AppService } from '../app.service';
 
-import { AcFixFixingRecord, WSHost } from '../app-interface-and-const';
+import { AcFixFixingRecord } from '../app-interface-and-const';
 import { PagedFixingRecordList } from './history-interface-and-const';
+import { environment } from '../../environments/environment';
 
 @Injectable()
 export class HistoryService {
@@ -52,7 +53,7 @@ export class HistoryService {
   }
 
   webSocketConnect() {
-    this.webSocket = Stomp.over(() => new WebSocket(WSHost + '/ws-connect'));
+    this.webSocket = Stomp.over(() => new WebSocket(environment.WSHost + '/ws-connect'));
     this.webSocket.connect({}, _ => {
       this.webSocket.subscribe('/ws-private/topic/socket-ID', msg => {
         this.webSocketId = msg.body;

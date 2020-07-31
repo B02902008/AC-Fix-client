@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 
-import { SQHost } from '../../app-interface-and-const';
+import { environment } from '../../../environments/environment';
 
 @Component({
   selector: 'app-sonar-report',
@@ -28,7 +28,7 @@ export class SonarReportComponent implements OnInit {
       });
     }
     this.id = id;
-    this.frameUrl = this.sanitizer.bypassSecurityTrustResourceUrl(SQHost + '/dashboard?id=AC-Fix-Build-' + this.id);
+    this.frameUrl = this.sanitizer.bypassSecurityTrustResourceUrl(environment.SQHost + '/dashboard?id=AC-Fix-Build-' + this.id);
     this.frameHeight = window.innerHeight - 126;
   }
 
