@@ -7,18 +7,18 @@ import { Stomp } from '@stomp/stompjs';
 import { AppService } from '../app.service';
 
 import { WSHost } from '../app-interface-and-const';
-import { AutofixWebSocket, webSockets } from './autofix-interace-and-const';
+import { AcFixWebSocket, webSockets } from './ac-fix-interace-and-const';
 
 @Injectable({
   providedIn: 'root'
 })
-export class AutofixService {
+export class AcFixService {
 
   webSockets = webSockets;
 
   constructor(private http: HttpClient, private service: AppService) { }
 
-  getWebSocket(tool: string): AutofixWebSocket {
+  getWebSocket(tool: string): AcFixWebSocket {
     return this.webSockets.contains(tool) ? this.webSockets[tool] : { webSocket: null, webSocketId: '', logStream: [] };
   }
 
@@ -28,7 +28,7 @@ export class AutofixService {
       .pipe(map(res => Number(res.headers.get('Content-Length'))), catchError(_ => of(0)));
   }
 
-  invokeAutoFix(tool: string, socketID: string, url: string): Observable<number> {
+  invokeAcFix(tool: string, socketID: string, url: string): Observable<number> {
     if (!this.webSockets.contains(tool)) { return; }
     const headers = new HttpHeaders({ 'Content-Type':  'application/json' });
     return this.http.post<number>('/acfix/' + tool, { socketID, url }, { headers })
@@ -40,7 +40,7 @@ export class AutofixService {
 
   webSocketConnect(tool: string): void {
     if (!this.webSockets.contains(tool)) { return; }
-    const socket: AutofixWebSocket = this.webSockets[tool];
+    const socket: AcFixWebSocket = this.webSockets[tool];
     socket.webSocket = Stomp.over(() => new WebSocket(WSHost + '/ws-connect'));
     socket.webSocket.connect({}, _ => {
       socket.webSocket.subscribe('/ws-private/topic/terminate', () => this.webSocketDisconnect(tool));
@@ -56,7 +56,7 @@ export class AutofixService {
 
   webSocketDisconnect(tool: string): void {
     if (!this.webSockets.contains(tool)) { return; }
-    const socket: AutofixWebSocket = this.webSockets[tool];
+    const socket: AcFixWebSocket = this.webSockets[tool];
     if (socket.webSocket !== null) { socket.webSocket.ws.close(); }
     socket.webSocket = null;
     socket.webSocketId = '';

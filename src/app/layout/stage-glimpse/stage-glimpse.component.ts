@@ -1,7 +1,7 @@
 import { Component, Input } from '@angular/core';
 
 import { statIconColorLambda, statIconClassLambda } from '../../app-interface-and-const';
-import { AutofixStageGlimpse, itemAccentClassLambda } from '../layout-interface-and-const';
+import { AcFixStageGlimpse, itemAccentClassLambda } from '../layout-interface-and-const';
 
 @Component({
   selector: 'app-stage-glimpse',
@@ -9,7 +9,7 @@ import { AutofixStageGlimpse, itemAccentClassLambda } from '../layout-interface-
 })
 export class StageGlimpseComponent {
 
-  @Input() glimpse: AutofixStageGlimpse;
+  @Input() glimpse: AcFixStageGlimpse;
   iconColor = statIconColorLambda;
   iconClass = statIconClassLambda;
   itemAccentClass = itemAccentClassLambda;

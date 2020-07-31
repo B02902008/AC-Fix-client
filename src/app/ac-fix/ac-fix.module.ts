@@ -1,21 +1,21 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
-import { AutofixComponent } from './autofix/autofix.component';
+import { AcFixComponent } from './ac-fix/ac-fix.component';
 
-import { AutofixRoutingModule } from './autofix-routing.module';
+import { AcFixRoutingModule } from './ac-fix-routing.module';
 import { CommonComponentModule } from '../common-component/common-component.module';
 
 
 @NgModule({
   declarations: [
-    AutofixComponent
+    AcFixComponent
   ],
   imports: [
     CommonModule,
-    AutofixRoutingModule,
+    AcFixRoutingModule,
     CommonComponentModule
   ],
   providers: []
 })
-export class AutofixModule { }
+export class AcFixModule { }

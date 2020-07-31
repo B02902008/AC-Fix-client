@@ -5,7 +5,7 @@ import { switchMap } from 'rxjs/operators';
 import { HistoryService } from '../history.service';
 
 import { statIconColorLambda, statIconClassLambda } from '../../app-interface-and-const';
-import { AutofixHistoryRowData, autofixHistoryTableColumns, PagedFixingRecordList } from '../history-interface-and-const';
+import { AcFixHistoryRowData, acFixHistoryTableColumns, PagedFixingRecordList } from '../history-interface-and-const';
 import { Pagination, Sorting } from '../../common-component/table/table-interface';
 
 @Component({
@@ -14,10 +14,10 @@ import { Pagination, Sorting } from '../../common-component/table/table-interfac
 })
 export class HistoryComponent implements OnInit {
 
-  columns = autofixHistoryTableColumns;
+  columns = acFixHistoryTableColumns;
   pagination: Pagination = { totalEntry: 1, totalPage: 1, currentPage: 1, perPage: 1 };
   currentSorting: Sorting = { sorting: '', direction: '' };
-  rows: AutofixHistoryRowData[] = [];
+  rows: AcFixHistoryRowData[] = [];
 
   constructor(
     private route: ActivatedRoute,

@@ -1,4 +1,9 @@
 .scrollableX {
   width: 100%;
   overflow-x: auto;
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+.scrollableX::-webkit-scrollbar {
+  display: none;
 }

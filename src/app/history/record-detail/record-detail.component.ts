@@ -4,7 +4,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { HistoryService } from '../history.service';
 
 import {
-  AutofixFixingRecord,
+  AcFixFixingRecord,
   statIconColorLambda,
   statIconClassLambda,
   terminalColoringPattern,
@@ -23,7 +23,7 @@ export class RecordDetailComponent implements OnInit, OnDestroy {
   id: number;
   productUrl: string;
   productSize: number;
-  record: AutofixFixingRecord = {} as AutofixFixingRecord;
+  record: AcFixFixingRecord = {} as AcFixFixingRecord;
   coloringPattern: MatchingToken[] = terminalColoringPattern;
   levelColoringStrategy = terminalLogLevelColoringStrategy;
   log: string[] = [];
@@ -48,7 +48,7 @@ export class RecordDetailComponent implements OnInit, OnDestroy {
     this.getRecordDetail();
     if (this.service.webSocketId) { this.service.webSocketDisconnect(); }
     const subscription = this.service.connected.subscribe(_ => {
-      this.service.webSocket.subscribe('/ws-private/topic/acfix/log', message => this.log.push(message.body));
+      this.service.webSocket.subscribe('/ws-private/topic/ac-fix/log', message => this.log.push(message.body));
       this.service.webSocket.subscribe('/ws-private/topic/terminate', () => {
         if (this.record.stat !== 1 && this.record.stat !== -1) { this.getRecordDetail(); }
         this.service.webSocketDisconnect();

@@ -1,24 +1,24 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 
-import { AutofixServiceConfig, AutofixWebSocket, services } from '../autofix-interace-and-const';
+import { AcFixServiceConfig, AcFixWebSocket, services } from '../ac-fix-interace-and-const';
 
 import { terminalColoringPattern, terminalLogLevelColoringStrategy, APIHost } from '../../app-interface-and-const';
 import { MatchingToken } from '../../common-component/terminal-style-log-display/terminal-interface';
 
-import { AutofixService } from '../autofix.service';
+import { AcFixService } from '../ac-fix.service';
 
 @Component({
-  selector: 'app-autofix',
-  templateUrl: './autofix.component.html',
-  styles: ['.autofix-finished-link:hover { cursor: pointer; color: #20A8D8; }']
+  selector: 'app-acfix',
+  templateUrl: './ac-fix.component.html',
+  styles: ['.ac-fix-finished-link:hover { cursor: pointer; color: #20A8D8; }']
 })
-export class AutofixComponent implements OnInit {
+export class AcFixComponent implements OnInit {
 
   tool =  '';
   productUrl = APIHost + '/history/product/';
-  webSocket: AutofixWebSocket;
-  config: AutofixServiceConfig = {} as AutofixServiceConfig;
+  webSocket: AcFixWebSocket;
+  config: AcFixServiceConfig = {} as AcFixServiceConfig;
   coloringPattern: MatchingToken[] = terminalColoringPattern;
   levelColoringStrategy = terminalLogLevelColoringStrategy;
   isFixing = () => (this.webSocket.webSocket !== null);
@@ -28,13 +28,13 @@ export class AutofixComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private router: Router,
-    private service: AutofixService
+    private service: AcFixService
   ) { }
 
   onParamReset(tool: string): void {
     if (tool === null || !services.contains(tool) || !this.service.webSockets.contains(tool) ) {
       this.router.navigate(['/error'], {
-        queryParams: { code: 404, error: 'Not Found', message: 'Auto-Fix service for ' + tool + ' is not provided.' }
+        queryParams: { code: 404, error: 'Not Found', message: 'AC-Fix service for ' + tool + ' is not provided.' }
       });
     }
     this.tool = tool;
@@ -48,7 +48,7 @@ export class AutofixComponent implements OnInit {
 
   inputBtnClicked(input: string) {
     const subscription = this.webSocket.connected.subscribe(socketId => {
-      this.service.invokeAutoFix(this.tool, socketId, input).subscribe(id => this.webSocket.buildIndex = id);
+      this.service.invokeAcFix(this.tool, socketId, input).subscribe(id => this.webSocket.buildIndex = id);
       subscription.unsubscribe();
     });
     this.service.webSocketConnect(this.tool);

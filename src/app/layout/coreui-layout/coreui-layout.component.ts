@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 
-import { hNavItems, sNavItems, asideAutofixTabSetData } from '../layout-interface-and-const';
+import { hNavItems, sNavItems, asideAcFixTabSetData } from '../layout-interface-and-const';
 
 @Component({
   // Magic selector 'app-dashboard' here
@@ -11,7 +11,7 @@ export class CoreuiLayoutComponent {
 
   headerNavItems = hNavItems;
   sidebarNavItems = sNavItems;
-  asideTabSet = asideAutofixTabSetData;
+  asideTabSet = asideAcFixTabSetData;
   sidebarMinimized = false;
 
   constructor() {

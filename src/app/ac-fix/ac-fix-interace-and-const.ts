@@ -2,7 +2,7 @@ import { DropdownPrefixChoice } from '../common-component/dropdown-prefix-input-
 import { CompatClient } from '@stomp/stompjs';
 import { Subject } from 'rxjs';
 
-export interface AutofixServiceConfig {
+export interface AcFixServiceConfig {
   source: DropdownPrefixChoice[];
   manual: string;
 }
@@ -14,22 +14,22 @@ export const services = {
       { name: 'GitLab', icon: 'cib-gitlab', prefix: 'https://gitlab.com/' }
       ],
     manual:
-      'Paste Github/GitLab repository URL in the text box below, and click the start button to invoke a new Cmake Auto-Fix process.\n' +
-      'One can only invoke one Cmake Auto-Fix process at a time, the start button will be disabled until current service terminate.\n' +
+      'Paste Github/GitLab repository URL in the text box below, and click the start button to invoke a new Cmake AC-Fix process.\n' +
+      'One can only invoke one Cmake AC-Fix process at a time, the start button will be disabled until current service terminate.\n' +
       'The repository should be a project using Cmake as its build tool.'
-  } as AutofixServiceConfig,
+  } as AcFixServiceConfig,
   gradle: {
     source: [
       { name: 'Github', icon: 'cib-github', prefix: 'https://github.com/' },
       { name: 'GitLab', icon: 'cib-gitlab', prefix: 'https://gitlab.com/' }
       ],
     manual:
-      'Paste Github/GitLab repository URL in the text box below, and click the start button to invoke a new Gradle Auto-Fix process.\n' +
-      'One can only invoke one Gradle Auto-Fix process at a time, the start button will be disabled until current service terminate.\n' +
+      'Paste Github/GitLab repository URL in the text box below, and click the start button to invoke a new Gradle AC-Fix process.\n' +
+      'One can only invoke one Gradle AC-Fix process at a time, the start button will be disabled until current service terminate.\n' +
       'The repository should be a project using Gradle as its build tool.\n' +
       'The timestamp in fixing log uses time zone GMT+00:00.\n' +
       'Android projects is currently not supported.'
-  } as AutofixServiceConfig,
+  } as AcFixServiceConfig,
   pip: {
     source: [
       { name: 'PyPI', icon: 'cib-pypi', prefix: 'https://pypi.org/project/' },
@@ -37,14 +37,14 @@ export const services = {
       { name: 'GitLab', icon: 'cib-gitlab', prefix: 'https://gitlab.com/' }
       ],
     manual:
-      'Paste PyPI/Github/GitLab repository URL in the text box below, and click the start button to invoke a new Pip Auto-Fix process.\n' +
-      'One can only invoke one Pip Auto-Fix process at a time, the start button will be disabled until current service terminate.\n' +
+      'Paste PyPI/Github/GitLab repository URL in the text box below, and click the start button to invoke a new Pip AC-Fix process.\n' +
+      'One can only invoke one Pip AC-Fix process at a time, the start button will be disabled until current service terminate.\n' +
       'The repository should be a project using Pip as its build tool.'
-  } as AutofixServiceConfig,
+  } as AcFixServiceConfig,
   contains: (s) => (['cmake', 'gradle', 'pip'].includes(s))
 };
 
-export interface AutofixWebSocket {
+export interface AcFixWebSocket {
   webSocket: CompatClient;
   webSocketId: string;
   connected: Subject<string>;
@@ -63,7 +63,7 @@ export const webSockets = {
     stageEmit: new Subject<string>(),
     buildIndex: -1,
     productSize: 0
-  } as AutofixWebSocket,
+  } as AcFixWebSocket,
   gradle: {
     webSocket: null,
     webSocketId: '',
@@ -72,7 +72,7 @@ export const webSockets = {
     stageEmit: new Subject<string>(),
     buildIndex: -1,
     productSize: 0
-  } as AutofixWebSocket,
+  } as AcFixWebSocket,
   pip: {
     webSocket: null,
     webSocketId: '',
@@ -81,6 +81,6 @@ export const webSockets = {
     stageEmit: new Subject<string>(),
     buildIndex: -1,
     productSize: 0
-  } as AutofixWebSocket,
+  } as AcFixWebSocket,
   contains: (s) => (['cmake', 'gradle', 'pip'].includes(s))
 };

@@ -6,14 +6,14 @@ import { PerfectScrollbarModule } from 'ngx-perfect-scrollbar';
 import { TabsModule } from 'ngx-bootstrap/tabs';
 
 import { CoreuiLayoutComponent } from './coreui-layout/coreui-layout.component';
-import { AsideAutofixTabComponent } from './aside-autofix-tab-set/aside-autofix-tab.component';
+import { AsideAcFixTabComponent } from './aside-ac-fix-tab-set/aside-ac-fix-tab.component';
 import { StageGlimpseComponent } from './stage-glimpse/stage-glimpse.component';
 
 
 @NgModule({
   declarations: [
     CoreuiLayoutComponent,
-    AsideAutofixTabComponent,
+    AsideAcFixTabComponent,
     StageGlimpseComponent
   ],
   imports: [

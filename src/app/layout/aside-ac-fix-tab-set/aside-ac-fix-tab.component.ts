@@ -1,19 +1,19 @@
 import { Component, Input, OnInit } from '@angular/core';
 
-import { AutofixService } from '../../autofix/autofix.service';
+import { AcFixService } from '../../ac-fix/ac-fix.service';
 
-import { AsideAutofixTabData, AutofixStageGlimpse } from '../layout-interface-and-const';
+import { AsideAcFixTabData, AcFixStageGlimpse } from '../layout-interface-and-const';
 
 @Component({
-  selector: 'app-aside-autofix-tab',
-  templateUrl: './aside-autofix-tab.component.html'
+  selector: 'app-aside-ac-fix-tab',
+  templateUrl: './aside-ac-fix-tab.component.html'
 })
-export class AsideAutofixTabComponent implements OnInit {
+export class AsideAcFixTabComponent implements OnInit {
 
-  @Input() tab: AsideAutofixTabData;
-  glimpses: AutofixStageGlimpse[] = [];
+  @Input() tab: AsideAcFixTabData;
+  glimpses: AcFixStageGlimpse[] = [];
 
-  constructor(private service: AutofixService) { }
+  constructor(private service: AcFixService) { }
 
   ngOnInit(): void {
     this.service.getWebSocket(this.tab.name).stageEmit.subscribe(msg => this.handleStageMessage(msg));

@@ -1,12 +1,12 @@
-import { autofixServices } from '../app-interface-and-const';
+import { acFixServices } from '../app-interface-and-const';
 import { ColumnConfig, ColumnType, TableCellIcon } from '../common-component/table/table-interface';
 
-export interface AutofixLoading {
+export interface AcFixLoading {
   load: number;
   core: number;
 }
 
-export interface AutofixLoadingData {
+export interface AcFixLoadingData {
   name: string;
   icon: string;
   cur: number;
@@ -28,7 +28,7 @@ export interface DashboardRecentResultRowData {
   routerLink: any[];
 }
 
-export const autofixLoadingDataSet: AutofixLoadingData[] = autofixServices.map(service => {
+export const acFixLoadingDataSet: AcFixLoadingData[] = acFixServices.map(service => {
   return { name: service.name, icon: service.icon, cur: 1, max: 1 };
 });
 

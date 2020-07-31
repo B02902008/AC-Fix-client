@@ -1,6 +1,6 @@
 import { MatchingToken, TokenType } from './common-component/terminal-style-log-display/terminal-interface';
 
-export interface AutofixFixingRecord {
+export interface AcFixFixingRecord {
   id: number;
   stat: number;
   name: string;
@@ -10,7 +10,7 @@ export interface AutofixFixingRecord {
   end: string;
 }
 
-export const autofixServices = [
+export const acFixServices = [
   { name: 'cmake', icon: 'cib-cmake' },
   { name: 'gradle', icon: 'cib-gradle' },
   { name: 'pip', icon: 'cib-pypi' }

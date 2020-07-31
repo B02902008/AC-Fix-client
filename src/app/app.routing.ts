@@ -28,8 +28,8 @@ export const routes: Routes = [
         loadChildren: () => import('./history/history.module').then(m => m.HistoryModule)
       },
       {
-        path: 'autofix',
-        loadChildren: () => import('./autofix/autofix.module').then(m => m.AutofixModule)
+        path: 'ac-fix',
+        loadChildren: () => import('./ac-fix/ac-fix.module').then(m => m.AcFixModule)
       },
       {
         path: 'sonar',

@@ -1,6 +1,6 @@
 <div class="animated fadeIn">
 
-  <app-card [name]="(tool | titlecase) + ' Auto-Fix Manual'" [canCollapse]="true">
+  <app-card [name]="(tool | titlecase) + ' AC-Fix Manual'" [canCollapse]="true">
     <ul>
       <li *ngFor="let line of config.manual.split('\n')">{{ line }}</li>
     </ul>
@@ -27,12 +27,12 @@
 
       <div class="py-3" *ngIf="isFinished()">
         <a #link [attr.href]="productUrl + webSocket.buildIndex" style="display: none"></a>
-        <span class="autofix-finished-link" *ngIf="isDownloadable()" (click)="link.click()">
+        <span class="ac-fix-finished-link" *ngIf="isDownloadable()" (click)="link.click()">
           <i class="cil-cloud-download"></i> Download Link ({{ webSocket.productSize | bytes }})
         </span>
         <span *ngIf="!isDownloadable()">No available product</span>
         <span style="cursor: default">&nbsp;|&nbsp;</span>
-        <span class="autofix-finished-link" (click)="restartLinkClicked()"><i class="fa fa-repeat"></i> Start a new Auto-Fix</span>
+        <span class="ac-fix-finished-link" (click)="restartLinkClicked()"><i class="fa fa-repeat"></i> Start a new AC-Fix</span>
       </div>
 
     </app-terminal>

@@ -1,15 +1,15 @@
-import { AutofixFixingRecord } from '../app-interface-and-const';
+import { AcFixFixingRecord } from '../app-interface-and-const';
 import { ColumnConfig, ColumnType, TableCellIcon } from '../common-component/table/table-interface';
 
 export interface PagedFixingRecordList {
-  content: AutofixFixingRecord[];
+  content: AcFixFixingRecord[];
   totalPages: number;
   totalElements: number;
   number: number;
   size: number;
 }
 
-export interface AutofixHistoryRowData {
+export interface AcFixHistoryRowData {
   id: number;
   stat: TableCellIcon;
   name: string;
@@ -20,7 +20,7 @@ export interface AutofixHistoryRowData {
   routerLink: any[];
 }
 
-export const autofixHistoryTableColumns: ColumnConfig[] = [
+export const acFixHistoryTableColumns: ColumnConfig[] = [
   { name: 'index', sortable: true, center: true, width: '65px', bind: 'id' },
   { name: 'stat', presentType: ColumnType.icon, center: true, width: '50px' },
   { name: 'project name', bind: 'name' },

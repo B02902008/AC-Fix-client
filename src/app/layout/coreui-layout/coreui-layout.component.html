@@ -28,9 +28,9 @@
 
   <app-aside [fixed]="true" [display]="false">
     <tabset>
-      <app-aside-autofix-tab
+      <app-aside-ac-fix-tab
         *ngFor="let tab of asideTabSet;" [tab]="tab" (selectTab)="asideTabSelected(tab)" (deselect)="asideTabDeselect(tab)"
-      ></app-aside-autofix-tab>
+      ></app-aside-ac-fix-tab>
     </tabset>
   </app-aside>
 

@@ -1,24 +1,24 @@
 import { INavData } from '@coreui/angular';
-import { autofixServices } from '../app-interface-and-const';
+import { acFixServices } from '../app-interface-and-const';
 
-export interface AsideAutofixTabData {
+export interface AsideAcFixTabData {
   name: string;
   icon: string;
   active: boolean;
 }
 
-export const asideAutofixTabSetData: AsideAutofixTabData[] = autofixServices.map((service, idx) => {
+export const asideAcFixTabSetData: AsideAcFixTabData[] = acFixServices.map((service, idx) => {
   return { name: service.name, icon: service.icon, active: idx === 0 };
 });
 
-interface AutofixStage {
+interface AcFixStage {
   name: string;
   stat: number;
 }
 
-export interface AutofixStageGlimpse {
+export interface AcFixStageGlimpse {
   index: number;
-  stage: AutofixStage[];
+  stage: AcFixStage[];
   finish: boolean;
 }
 
@@ -40,24 +40,24 @@ export const hNavItems: INavData[] = [
 export const sNavItems: INavData[] = [
   { title: true, name: 'Dashboard' },
   { name: 'Dashboard', url: '/dashboard', icon: 'icon-speedometer' },
-  { title: true, name: 'Auto-Fix' },
+  { title: true, name: 'AC-Fix' },
   {
     name: 'C++',
-    url: '/autofix/cplusplus',
+    url: '/ac-fix/cplusplus',
     icon: 'cib-cplusplus',
-    children: [ { name: 'CMake', url: '/autofix/cmake', icon: 'cib-cmake' } ]
+    children: [ { name: 'CMake', url: '/ac-fix/cmake', icon: 'cib-cmake' } ]
   },
   {
     name: 'Java',
-    url: '/autofix/java',
+    url: '/ac-fix/java',
     icon: 'cib-java',
-    children: [ { name: 'Gradle', url: '/autofix/gradle', icon: 'cib-gradle' } ]
+    children: [ { name: 'Gradle', url: '/ac-fix/gradle', icon: 'cib-gradle' } ]
   },
   {
     name: 'Python',
-    url: '/autofix/python',
+    url: '/ac-fix/python',
     icon: 'cib-python',
-    children: [ { name: 'Pip', url: '/autofix/pip', icon: 'cib-pypi' } ]
+    children: [ { name: 'Pip', url: '/ac-fix/pip', icon: 'cib-pypi' } ]
   },
   { title: true, name: 'Statistics' },
   { name: 'History', url: '/history', icon: 'cil-history' },

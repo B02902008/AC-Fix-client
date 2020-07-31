@@ -6,7 +6,7 @@ import { CompatClient, Stomp } from '@stomp/stompjs';
 
 import { AppService } from '../app.service';
 
-import { AutofixFixingRecord, WSHost } from '../app-interface-and-const';
+import { AcFixFixingRecord, WSHost } from '../app-interface-and-const';
 import { PagedFixingRecordList } from './history-interface-and-const';
 
 @Injectable()
@@ -32,9 +32,9 @@ export class HistoryService {
       .pipe(catchError(err => this.service.handleError(err)));
   }
 
-  getHistoryById(id: number): Observable<AutofixFixingRecord> {
+  getHistoryById(id: number): Observable<AcFixFixingRecord> {
     if (isNaN(id)) { return null; }
-    return this.http.get<AutofixFixingRecord>('/history/' + id)
+    return this.http.get<AcFixFixingRecord>('/history/' + id)
       .pipe(catchError(err => this.service.handleError(err)));
   }
 

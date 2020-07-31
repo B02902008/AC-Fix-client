@@ -1,16 +1,16 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
-import { AutofixComponent } from './autofix/autofix.component';
+import { AcFixComponent } from './ac-fix/ac-fix.component';
 
 const routes: Routes = [
   {
     path: '',
-    component: AutofixComponent
+    component: AcFixComponent
   },
   {
     path: ':tool',
-    component: AutofixComponent
+    component: AcFixComponent
   }
 ];
 
@@ -19,4 +19,4 @@ const routes: Routes = [
   imports: [ RouterModule.forChild(routes) ],
   exports: [ RouterModule ]
 })
-export class AutofixRoutingModule { }
+export class AcFixRoutingModule { }

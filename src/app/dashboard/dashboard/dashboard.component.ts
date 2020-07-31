@@ -7,7 +7,7 @@ import { statIconColorLambda, statIconClassLambda } from '../../app-interface-an
 import {
   DashboardCurrentQueueRowData,
   DashboardRecentResultRowData,
-  autofixLoadingDataSet,
+  acFixLoadingDataSet,
   currentQueueTableColumns,
   recentResultTableColumns
 } from '../dashboard-interface-and-const';
@@ -19,7 +19,7 @@ import {
 })
 export class DashboardComponent implements OnInit, OnDestroy {
 
-  autofixLoadingDataSet = autofixLoadingDataSet;
+  acFixLoadingDataSet = acFixLoadingDataSet;
   currentQueueTableColumns = currentQueueTableColumns;
   currentQueueTableRows: DashboardCurrentQueueRowData[] = [];
   recentResultTableColumns = recentResultTableColumns;
@@ -44,8 +44,8 @@ export class DashboardComponent implements OnInit, OnDestroy {
   }
 
   getCurrentLoad(): void {
-    this.autofixLoadingDataSet.forEach(data => {
-      this.service.getAutofixLoading(data.name)
+    this.acFixLoadingDataSet.forEach(data => {
+      this.service.getAcFixLoading(data.name)
         .subscribe(loading => {
           data.cur = loading.load;
           data.max = loading.core;

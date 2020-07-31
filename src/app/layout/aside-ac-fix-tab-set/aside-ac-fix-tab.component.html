@@ -4,7 +4,7 @@
 </ng-template>
 
 <div *ngIf="glimpses.length === 0" class="text-center text-muted py-3">
-  No {{ tab.name | titlecase }} Auto-Fix invoked
+  No {{ tab.name | titlecase }} AC-Fix invoked
 </div>
 
 <app-stage-glimpse *ngFor="let glimpse of glimpses" [glimpse]="glimpse"></app-stage-glimpse>
